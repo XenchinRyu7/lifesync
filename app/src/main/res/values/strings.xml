@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">Life Sync</string>
+    <string name="landing_screen_title">Synchronize Your Life</string>
+    <string name="landing_screen_description">LifeSync brings harmony to your life by synchronizing your tasks, finances, and schedule in one simple app. Stay organized, manage your time better, and keep everything in sync for a more balanced life.</string>
+
+    <string name="landing_screen_1_title">Task Management</string>
+    <string name="landing_screen_1_description">Task Management helps you stay organized and productive by allowing you to create, prioritize, and track tasks. Whether it\'s work-related or personal, you can set deadlines, assign categories, and monitor your progress easily.</string>
+    <string name="landing_screen_next">Next</string>
+
+    <string name="landing_screen_2_title">Money Management</string>
+    <string name="landing_screen_2_description">Money Management empowers you to take control of your finances by tracking expenses, setting budgets, and managing your savings. It gives you a clear overview of your financial health, helping you make informed decisions.</string>
+
+    <string name="landing_screen_3_title">Calendar Scheduling</string>
+    <string name="landing_screen_3_description">Scheduling keeps your life in sync by organizing your calendar, setting reminders for important events, and ensuring you never miss a deadline. It seamlessly integrates with your tasks and goals to help you manage your time efficiently.</string>
+
+    <string name="landing_screen_start">Let\'s Start</string>
+</resources>

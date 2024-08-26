@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph_landing.xml"
+    app:startDestination="@id/landingScreenFragment">
+    <fragment
+        android:id="@+id/landingScreenFragment"
+        android:name="com.saefulrdevs.lifesync.view.started.LandingScreen"
+        android:label="StartedScreen"
+        tools:layout="@layout/fragment_landing_screen">
+        <action
+            android:id="@+id/startLandingScreen1"
+            app:destination="@id/landingScreenFragment1" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/landingScreenFragment1"
+        android:name="com.saefulrdevs.lifesync.view.started.LandingScreen1"
+        android:label="StartedScreen1"
+        tools:layout="@layout/fragment_landing_screen1">
+        <action
+            android:id="@+id/startLandingScreen2"
+            app:destination="@id/landingScreenFragment2" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/landingScreenFragment2"
+        android:name="com.saefulrdevs.lifesync.view.started.LandingScreen2"
+        android:label="StartedScreen3"
+        tools:layout="@layout/fragment_landing_screen2">
+        <action
+            android:id="@+id/startLandingScreen3"
+            app:destination="@id/landingScreenFragment3" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/landingScreenFragment3"
+        android:name="com.saefulrdevs.lifesync.view.started.LandingScreen3"
+        android:label="StartedScreen3"
+        tools:layout="@layout/fragment_landing_screen3">
+        <action
+            android:id="@+id/startMainScreen"
+            app:destination="@id/landingScreenFragment" />
+    </fragment>
+
+</navigation>
