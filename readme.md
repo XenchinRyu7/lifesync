@@ -29,7 +29,7 @@ To get a local copy of LifeSync up and running on your machine, follow these ste
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/your-username/lifesync.git
+   git clone https://github.com/XenchinRyu7/lifesync.git
    cd lifesync
    
 2. **Open the project in Android Studio**
