@@ -14,4 +14,17 @@
     <string name="landing_screen_3_description">Scheduling keeps your life in sync by organizing your calendar, setting reminders for important events, and ensuring you never miss a deadline. It seamlessly integrates with your tasks and goals to help you manage your time efficiently.</string>
 
     <string name="landing_screen_start">Let\'s Start</string>
+    <string name="title_activity_home">Home</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="title_profile">Profile</string>
+    <string name="title_history">History</string>
+    <string name="title_activity_auth">AuthActivity</string>
+    <string name="tab_text_1">Tab 1</string>
+    <string name="tab_text_2">Tab 2</string>
+    <string name="get_started_now">Get Started Now</string>
+    <string name="auth_description">Create an account or log in to explore about our app, login with google recomendation for backup with Google Drive</string>
+    <string name="register">Register</string>
+    <string name="login">Login</string>
 </resources>

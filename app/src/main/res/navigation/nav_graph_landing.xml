@@ -39,9 +39,7 @@
         android:name="com.saefulrdevs.lifesync.view.started.LandingScreen3"
         android:label="StartedScreen3"
         tools:layout="@layout/fragment_landing_screen3">
-        <action
-            android:id="@+id/startMainScreen"
-            app:destination="@id/landingScreenFragment" />
+
     </fragment>
 
 </navigation>
