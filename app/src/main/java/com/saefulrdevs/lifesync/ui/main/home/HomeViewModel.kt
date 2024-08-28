@@ -1,4 +1,4 @@
-package com.saefulrdevs.lifesync.view.main.home
+package com.saefulrdevs.lifesync.ui.main.home
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

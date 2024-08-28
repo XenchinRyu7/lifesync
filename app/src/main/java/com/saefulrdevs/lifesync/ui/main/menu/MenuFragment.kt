@@ -1,4 +1,4 @@
-package com.saefulrdevs.lifesync.view.main.home
+package com.saefulrdevs.lifesync.ui.main.menu
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,11 +7,11 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.saefulrdevs.lifesync.databinding.FragmentHomeBinding
+import com.saefulrdevs.lifesync.databinding.FragmentMenuBinding
 
-class HomeFragment : Fragment() {
+class MenuFragment : Fragment() {
 
-    private var _binding: FragmentHomeBinding? = null
+    private var _binding: FragmentMenuBinding? = null
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -22,14 +22,14 @@ class HomeFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val homeViewModel =
-            ViewModelProvider(this).get(HomeViewModel::class.java)
+        val menuViewModel =
+            ViewModelProvider(this).get(MenuViewModel::class.java)
 
-        _binding = FragmentHomeBinding.inflate(inflater, container, false)
+        _binding = FragmentMenuBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        val textView: TextView = binding.textHome
-        homeViewModel.text.observe(viewLifecycleOwner) {
+        val textView: TextView = binding.textDashboard
+        menuViewModel.text.observe(viewLifecycleOwner) {
             textView.text = it
         }
         return root

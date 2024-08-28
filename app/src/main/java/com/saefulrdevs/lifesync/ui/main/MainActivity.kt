@@ -1,4 +1,4 @@
-package com.saefulrdevs.lifesync.view.main
+package com.saefulrdevs.lifesync.ui.main
 
 import android.os.Bundle
 import com.google.android.material.bottomnavigation.BottomNavigationView

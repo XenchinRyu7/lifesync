@@ -1,4 +1,4 @@
-package com.saefulrdevs.lifesync.view.started
+package com.saefulrdevs.lifesync.ui.started
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

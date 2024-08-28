@@ -6,7 +6,7 @@
     app:startDestination="@id/landingScreenFragment">
     <fragment
         android:id="@+id/landingScreenFragment"
-        android:name="com.saefulrdevs.lifesync.view.started.LandingScreen"
+        android:name="com.saefulrdevs.lifesync.ui.started.LandingScreen"
         android:label="StartedScreen"
         tools:layout="@layout/fragment_landing_screen">
         <action
@@ -16,7 +16,7 @@
 
     <fragment
         android:id="@+id/landingScreenFragment1"
-        android:name="com.saefulrdevs.lifesync.view.started.LandingScreen1"
+        android:name="com.saefulrdevs.lifesync.ui.started.LandingScreen1"
         android:label="StartedScreen1"
         tools:layout="@layout/fragment_landing_screen1">
         <action
@@ -26,7 +26,7 @@
 
     <fragment
         android:id="@+id/landingScreenFragment2"
-        android:name="com.saefulrdevs.lifesync.view.started.LandingScreen2"
+        android:name="com.saefulrdevs.lifesync.ui.started.LandingScreen2"
         android:label="StartedScreen3"
         tools:layout="@layout/fragment_landing_screen2">
         <action
@@ -36,7 +36,7 @@
 
     <fragment
         android:id="@+id/landingScreenFragment3"
-        android:name="com.saefulrdevs.lifesync.view.started.LandingScreen3"
+        android:name="com.saefulrdevs.lifesync.ui.started.LandingScreen3"
         android:label="StartedScreen3"
         tools:layout="@layout/fragment_landing_screen3">
 

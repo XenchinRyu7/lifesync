@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".view.started.LandingScreen1">
+    tools:context=".ui.started.LandingScreen1">
 
     <ImageView
         android:id="@+id/imageView"
@@ -44,24 +44,25 @@
         android:layout_marginEnd="10dp"
         android:orientation="horizontal">
 
+
         <Button
             android:id="@+id/btnBack"
-            style="?android:attr/buttonBarButtonStyle"
+            style="?attr/materialButtonOutlinedStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:icon="@drawable/arrow_back"
-            tools:ignore="speakableText" />
+            app:icon="@drawable/arrow_back" />
 
         <Button
             android:id="@+id/btnNext"
+            style="?attr/materialButtonOutlinedStyle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
             android:layout_marginStart="30dp"
             android:layout_weight="1"
             android:text="@string/landing_screen_next"
             app:icon="@drawable/arrow_right"
-            app:iconGravity="end" />
+            app:iconGravity="end"
+            app:shapeAppearance="@style/CustomShapeAppearance" />
     </LinearLayout>
 
 </LinearLayout>

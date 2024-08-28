@@ -6,9 +6,8 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="16dp"
-    tools:context=".view.auth.AuthActivity">
+    tools:context=".ui.auth.AuthActivity">
 
-    <!-- Logo or Icon -->
     <ImageView
         android:id="@+id/logoImageView"
         android:layout_width="wrap_content"
@@ -17,62 +16,39 @@
         android:contentDescription="@string/app_name"
         android:src="@drawable/logo_lifesync" />
 
-    <!-- Get Started Now Text -->
     <TextView
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:paddingTop="16dp"
+        android:paddingTop="8dp"
         android:paddingBottom="8dp"
         android:text="@string/get_started_now"
         android:textSize="24sp"
         android:textStyle="bold" />
 
-    <!-- Description Text -->
     <TextView
         android:id="@+id/textView4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:paddingBottom="16dp"
+        android:paddingBottom="8dp"
         android:text="@string/auth_description"
         android:textSize="14sp" />
 
-    <!-- TabLayout for Sign Up and Log In -->
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tabLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
         app:tabGravity="fill"
         app:tabMode="fixed" />
 
-    <!-- ViewPager2 for Fragment Navigation -->
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/viewPager"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1" />
 
-    <!-- Register Button (for Sign Up fragment) -->
-    <Button
-        android:id="@+id/registerButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="@string/register"
-        android:textColor="@android:color/white"
-        android:visibility="gone" />
-
-    <!-- Login Button (for Log In fragment) -->
-    <Button
-        android:id="@+id/loginButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="@string/login"
-        android:textColor="@android:color/white"
-         /> <!-- Set to visible in LoginFragment -->
 </LinearLayout>

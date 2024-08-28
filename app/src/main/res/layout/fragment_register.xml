@@ -1,83 +1,148 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="16dp">
+    android:padding="8dp">
 
-    <!-- First Name -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <EditText
+        <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/firstNameEditText"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
             android:layout_weight="1"
-            android:autofillHints="First Name"
-            android:hint="First Name"
-            android:inputType="textPersonName" />
+            android:hint="First Name">
 
-        <!-- Last Name -->
-        <EditText
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/lastNameEditText"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
             android:layout_weight="1"
-            android:autofillHints="Last Name"
-            android:hint="Last Name"
-            android:inputType="textPersonName" />
+            android:hint="Last Name">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+        </com.google.android.material.textfield.TextInputLayout>
     </LinearLayout>
 
-    <!-- Email -->
-    <EditText
+    <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/emailEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:autofillHints="youremail@domain.com"
-        android:hint="Email"
-        android:inputType="textEmailAddress" />
+        android:hint="Email">
 
-    <!-- Birth Date -->
-    <EditText
-        android:id="@+id/birthDateEditText"
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/birthDateInputLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:hint="Birth of Date"
-        android:inputType="date" />
+        android:hint="Birth Date"
+        app:endIconContentDescription="@string/date_icon"
+        app:endIconDrawable="@drawable/calendar_month_24dp"
+        app:endIconMode="custom">
 
-    <!-- Phone Number -->
-    <EditText
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/birthDateEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:focusable="true"
+            android:inputType="none" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/phoneNumberEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:hint="Phone Number"
-        android:inputType="phone" />
+        android:hint="Phone Number">
 
-    <!-- Password -->
-    <EditText
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/passwordEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:hint="Set Password"
-        android:inputType="textPassword" />
+        android:hint="Password"
+        app:endIconMode="password_toggle">
 
-    <!-- Register with Google Button -->
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
     <Button
-        android:id="@+id/registerWithGoogleButton"
+        android:id="@+id/registerBtn"
+        style="?attr/materialButtonOutlinedStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:backgroundTint="?attr/colorPrimary"
-        android:drawablePadding="8dp"
-        android:padding="12dp"
-        android:text="Register with Google"
-        android:textAllCaps="false"
-        android:textColor="@android:color/white" />
+        android:layout_marginTop="8dp"
+        android:text="Set Up Now"
+        app:shapeAppearance="@style/CustomShapeAppearance" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="1"
+            android:background="?android:attr/listDivider" />
+
+        <TextView
+            android:id="@+id/textView5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:gravity="center"
+            android:text="@string/or"
+            android:textSize="16sp" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="1"
+            android:background="?android:attr/listDivider" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/googleBtn"
+        style="?attr/materialButtonOutlinedStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Set Up With Google"
+        app:icon="@drawable/google_color_svgrepo_com"
+        app:iconGravity="textStart"
+        app:iconTint="@null"
+        app:shapeAppearance="@style/CustomShapeAppearance" />
 
 </LinearLayout>

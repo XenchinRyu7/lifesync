@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".view.started.LandingScreen">
+    tools:context=".ui.started.LandingScreen">
 
     <ImageView
         android:id="@+id/imageView"
@@ -38,12 +38,13 @@
 
     <Button
         android:id="@+id/btnNext"
+        style="?attr/materialButtonOutlinedStyle"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="30dp"
         android:text="@string/landing_screen_next"
         app:icon="@drawable/arrow_right"
-        app:iconGravity="end" />
+        app:iconGravity="end"
+        app:shapeAppearance="@style/CustomShapeAppearance" />
 
 </LinearLayout>

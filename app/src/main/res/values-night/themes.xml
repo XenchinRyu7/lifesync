@@ -1,7 +1,18 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
     <style name="Base.Theme.LifeSync" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your dark theme here. -->
-        <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryVariant">@color/colorPrimaryVariant</item>
+        <item name="colorSecondary">@color/colorSecondary</item>
+
+        <!-- Background color -->
+        <item name="android:colorBackground">@color/colorBackground</item>
+
+        <!-- Text colors -->
+        <item name="colorOnPrimary">@color/colorOnPrimary</item>
+        <item name="colorOnBackground">@color/colorOnBackground</item>
+
+        <!-- Button style -->
+        <item name="buttonStyle">@style/Widget.Material3.Button</item>
     </style>
 </resources>

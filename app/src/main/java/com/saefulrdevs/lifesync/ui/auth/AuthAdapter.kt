@@ -1,4 +1,4 @@
-package com.saefulrdevs.lifesync.view.auth
+package com.saefulrdevs.lifesync.ui.auth
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity

@@ -1,17 +1,9 @@
-package com.saefulrdevs.lifesync.view.auth
+package com.saefulrdevs.lifesync.ui.auth
 
 import android.os.Bundle
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-import androidx.viewpager2.widget.ViewPager2
-import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
-import com.saefulrdevs.lifesync.R
 import com.saefulrdevs.lifesync.databinding.ActivityAuthBinding
-import com.saefulrdevs.lifesync.databinding.ActivityMainBinding
-import com.saefulrdevs.lifesync.databinding.FragmentLandingScreenBinding
 
 class AuthActivity : AppCompatActivity() {
 

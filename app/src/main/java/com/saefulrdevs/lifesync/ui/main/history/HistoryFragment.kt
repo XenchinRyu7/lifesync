@@ -1,4 +1,4 @@
-package com.saefulrdevs.lifesync.view.main.history
+package com.saefulrdevs.lifesync.ui.main.history
 
 import android.os.Bundle
 import android.view.LayoutInflater

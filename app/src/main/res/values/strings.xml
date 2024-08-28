@@ -27,4 +27,6 @@
     <string name="auth_description">Create an account or log in to explore about our app, login with google recomendation for backup with Google Drive</string>
     <string name="register">Register</string>
     <string name="login">Login</string>
+    <string name="or">Or</string>
+    <string name="date_icon">Date</string>
 </resources>

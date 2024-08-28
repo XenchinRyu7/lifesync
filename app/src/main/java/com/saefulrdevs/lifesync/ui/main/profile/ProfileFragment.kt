@@ -1,4 +1,4 @@
-package com.saefulrdevs.lifesync.view.main.profile
+package com.saefulrdevs.lifesync.ui.main.profile
 
 import androidx.fragment.app.viewModels
 import android.os.Bundle

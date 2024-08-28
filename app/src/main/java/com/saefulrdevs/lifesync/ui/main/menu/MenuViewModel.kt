@@ -1,13 +1,13 @@
-package com.saefulrdevs.lifesync.view.main.history
+package com.saefulrdevs.lifesync.ui.main.menu
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
-class HistoryViewModel : ViewModel() {
+class MenuViewModel : ViewModel() {
 
     private val _text = MutableLiveData<String>().apply {
-        value = "This is notifications Fragment"
+        value = "This is dashboard Fragment"
     }
     val text: LiveData<String> = _text
 }
