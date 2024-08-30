@@ -12,11 +12,13 @@ class ProfileRepository(context: Context) {
 
     fun insertProfile(profile: Profile): Long {
         val values = ContentValues().apply {
+            put(DatabaseHelper.COLUMN_PROFILE_ID, profile.id)
             put(DatabaseHelper.COLUMN_PROFILE_NAME, profile.name)
             put(DatabaseHelper.COLUMN_PROFILE_USERNAME, profile.username)
             put(DatabaseHelper.COLUMN_PROFILE_PASSWORD, profile.password)
             put(DatabaseHelper.COLUMN_PROFILE_EMAIL, profile.email)
             put(DatabaseHelper.COLUMN_PROFILE_AVATAR_URL, profile.avatarUrl)
+            put(DatabaseHelper.COLUMN_PROFILE_PIN, profile.pin)
         }
         return db.insert(DatabaseHelper.TABLE_PROFILE, null, values)
     }
@@ -28,6 +30,7 @@ class ProfileRepository(context: Context) {
             put(DatabaseHelper.COLUMN_PROFILE_PASSWORD, profile.password)
             put(DatabaseHelper.COLUMN_PROFILE_EMAIL, profile.email)
             put(DatabaseHelper.COLUMN_PROFILE_AVATAR_URL, profile.avatarUrl)
+            put(DatabaseHelper.COLUMN_PROFILE_PIN, profile.pin)
         }
         return db.update(
             DatabaseHelper.TABLE_PROFILE,
@@ -57,11 +60,12 @@ class ProfileRepository(context: Context) {
         )
         return if (cursor.moveToFirst()) {
             Profile(
-                id = cursor.getLong(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_PROFILE_ID)),
+                id = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_PROFILE_ID)),
                 name = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_PROFILE_NAME)),
                 username = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_PROFILE_USERNAME)),
                 password = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_PROFILE_PASSWORD)),
                 email = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_PROFILE_EMAIL)),
+                pin = cursor.getInt(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_PROFILE_PIN)),
                 avatarUrl = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_PROFILE_AVATAR_URL))
             )
         } else {

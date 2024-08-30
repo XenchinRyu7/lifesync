@@ -39,6 +39,9 @@ android {
     buildFeatures {
         viewBinding = true
     }
+    packagingOptions {
+        resources.excludes.add("META-INF/*")
+    }
 }
 
 dependencies {
@@ -64,4 +67,14 @@ dependencies {
 
     //viewpager
     implementation(libs.androidx.viewpager2)
+
+    // Google Sign-In SDK
+    implementation(libs.play.services.auth) // Pastikan menggunakan versi terbaru
+
+    // Google Drive API client
+    implementation(libs.google.api.client.android)
+
+    // Untuk penggunaan Kotlin, tambahkan juga coroutine dependencies jika diperlukan
+    implementation(libs.kotlinx.coroutines.android)
+
 }

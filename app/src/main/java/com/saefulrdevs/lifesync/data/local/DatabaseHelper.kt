@@ -11,7 +11,7 @@ class DatabaseHelper(context: Context) :
         // Create the Profile table
         val createProfileTable = """
             CREATE TABLE $TABLE_PROFILE (
-                $COLUMN_PROFILE_ID INTEGER PRIMARY KEY AUTOINCREMENT,
+                $COLUMN_PROFILE_ID STRING PRIMARY KEY,
                 $COLUMN_PROFILE_NAME TEXT NOT NULL,
                 $COLUMN_PROFILE_USERNAME TEXT NOT NULL,
                 $COLUMN_PROFILE_PASSWORD TEXT NOT NULL,
@@ -24,7 +24,7 @@ class DatabaseHelper(context: Context) :
         // Create the Task table
         val createTaskTable = """
             CREATE TABLE $TABLE_TASK (
-                $COLUMN_TASK_ID INTEGER PRIMARY KEY AUTOINCREMENT,
+                $COLUMN_TASK_ID INTEGER PRIMARY KEY,
                 $COLUMN_TASK_TITLE TEXT NOT NULL,
                 $COLUMN_TASK_DESCRIPTION TEXT,
                 $COLUMN_TASK_DUE_DATE TEXT,
@@ -52,6 +52,7 @@ class DatabaseHelper(context: Context) :
         const val COLUMN_PROFILE_PASSWORD = "password"
         const val COLUMN_PROFILE_EMAIL = "email"
         const val COLUMN_PROFILE_AVATAR_URL = "avatarUrl"
+        const val COLUMN_PROFILE_PIN = "pin"
 
         const val TABLE_TASK = "task"
         const val COLUMN_TASK_ID = "id"
