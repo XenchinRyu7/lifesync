@@ -69,12 +69,11 @@ dependencies {
     implementation(libs.androidx.viewpager2)
 
     // Google Sign-In SDK
-    implementation(libs.play.services.auth) // Pastikan menggunakan versi terbaru
+    implementation(libs.play.services.auth)
 
     // Google Drive API client
     implementation(libs.google.api.client.android)
 
-    // Untuk penggunaan Kotlin, tambahkan juga coroutine dependencies jika diperlukan
     implementation(libs.kotlinx.coroutines.android)
 
 }

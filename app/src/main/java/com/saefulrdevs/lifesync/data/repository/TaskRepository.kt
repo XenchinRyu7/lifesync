@@ -55,11 +55,14 @@ class TaskRepository(context: Context) {
         )
         return if (cursor.moveToFirst()) {
             Task(
-                id = cursor.getLong(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_TASK_ID)),
+                id = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_TASK_ID)),
                 title = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_TASK_TITLE)),
                 description = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_TASK_DESCRIPTION)),
                 dueDate = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_TASK_DUE_DATE)),
-                isCompleted = cursor.getInt(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_TASK_IS_COMPLETED)) == 1
+                isCompleted = cursor.getInt(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_TASK_IS_COMPLETED)) == 1,
+                group = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_TASK_GROUP)),
+                progress = cursor.getInt(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_TASK_PROGRESS)),
+                iconGroup = cursor.getInt(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_TASK_ICON_GROUP))
             )
         } else {
             null
@@ -71,11 +74,14 @@ class TaskRepository(context: Context) {
         val cursor = db.query(DatabaseHelper.TABLE_TASK, null, null, null, null, null, null)
         while (cursor.moveToNext()) {
             val task = Task(
-                id = cursor.getLong(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_TASK_ID)),
+                id = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_TASK_ID)),
                 title = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_TASK_TITLE)),
                 description = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_TASK_DESCRIPTION)),
                 dueDate = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_TASK_DUE_DATE)),
-                isCompleted = cursor.getInt(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_TASK_IS_COMPLETED)) == 1
+                isCompleted = cursor.getInt(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_TASK_IS_COMPLETED)) == 1,
+                group = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_TASK_GROUP)),
+                progress = cursor.getInt(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_TASK_PROGRESS)),
+                iconGroup = cursor.getInt(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_TASK_ICON_GROUP))
             )
             tasks.add(task)
         }

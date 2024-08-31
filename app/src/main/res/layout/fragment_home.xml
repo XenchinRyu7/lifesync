@@ -31,7 +31,7 @@
             android:src="@drawable/profile" />
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
             android:layout_weight="1"
@@ -66,9 +66,9 @@
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView"
+        android:id="@+id/recyclerViewInProgress"
         android:layout_width="0dp"
-        android:layout_height="100dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
@@ -133,12 +133,10 @@
                 android:orientation="horizontal"
                 android:padding="16dp">
 
-                <!-- Wrap Progress Indicator and TextView in FrameLayout -->
                 <FrameLayout
                     android:layout_width="100dp"
                     android:layout_height="100dp">
 
-                    <!-- TextView for percentage -->
                     <com.google.android.material.progressindicator.CircularProgressIndicator
                         android:id="@+id/circularProgressIndicator"
                         android:layout_width="wrap_content"
@@ -151,7 +149,7 @@
                         app:trackThickness="4dp" />
 
                     <TextView
-                        android:id="@+id/progressText"
+                        android:id="@+id/progressGroup"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
@@ -162,7 +160,7 @@
                 </FrameLayout>
 
                 <ImageView
-                    android:id="@+id/detailTaskBtn"
+                    android:id="@+id/iconGroup"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="start"
@@ -186,7 +184,7 @@
         android:fontFamily="@font/lexend_deca"
         android:text="In Progress"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/recyclerView"
+        app:layout_constraintBottom_toTopOf="@+id/recyclerViewInProgress"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cardView" />
@@ -202,13 +200,13 @@
         android:fontFamily="@font/lexend_deca"
         android:text="Task Groups"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/recyclerView2"
+        app:layout_constraintBottom_toTopOf="@+id/recyclerViewTaskGroup"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/recyclerView" />
+        app:layout_constraintTop_toBottomOf="@+id/recyclerViewInProgress" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView2"
+        android:id="@+id/recyclerViewTaskGroup"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="8dp"

@@ -60,5 +60,8 @@ class DatabaseHelper(context: Context) :
         const val COLUMN_TASK_DESCRIPTION = "description"
         const val COLUMN_TASK_DUE_DATE = "dueDate"
         const val COLUMN_TASK_IS_COMPLETED = "isCompleted"
+        const val COLUMN_TASK_GROUP = "group"
+        const val COLUMN_TASK_PROGRESS = "progress"
+        const val COLUMN_TASK_ICON_GROUP = "iconGroup"
     }
 }

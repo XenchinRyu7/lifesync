@@ -1,9 +1,14 @@
 package com.saefulrdevs.lifesync.data.model
 
+import java.util.UUID
+
 data class Task(
-    val id: Long = 0,
+    val id: String = UUID.randomUUID().toString(),
     val title: String,
-    val description: String,
-    val dueDate: String,
+    val group: String,
+    val progress: Int,
+    val iconGroup: Int,
+    val description: String? = null,
+    val dueDate: String? = null ,
     val isCompleted: Boolean = false
 )
