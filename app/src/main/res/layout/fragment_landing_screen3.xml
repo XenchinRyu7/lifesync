@@ -49,7 +49,7 @@
             style="?attr/materialButtonOutlinedStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:icon="@drawable/arrow_back" />
+            app:icon="@drawable/ic_arrow_back" />
 
         <Button
             android:id="@+id/btnNext"
@@ -59,7 +59,7 @@
             android:layout_marginStart="30dp"
             android:layout_weight="1"
             android:text="@string/landing_screen_next"
-            app:icon="@drawable/arrow_right"
+            app:icon="@drawable/ic_arrow_right"
             app:iconGravity="end"
             app:shapeAppearance="@style/CustomShapeAppearance" />
     </LinearLayout>

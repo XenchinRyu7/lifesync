@@ -43,7 +43,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:text="@string/landing_screen_next"
-        app:icon="@drawable/arrow_right"
+        app:icon="@drawable/ic_arrow_right"
         app:iconGravity="end"
         app:shapeAppearance="@style/CustomShapeAppearance" />
 

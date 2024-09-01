@@ -31,4 +31,6 @@
     <string name="date_icon">Date</string>
     <string name="server_client_id">46195575147-g2sbcldlqg043gp8l2cr7di54bcljsnf.apps.googleusercontent.com</string>
     <string name="title_menu">Menu</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

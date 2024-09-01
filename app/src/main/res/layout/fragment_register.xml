@@ -58,7 +58,7 @@
         android:layout_height="wrap_content"
         android:hint="Birth Date"
         app:endIconContentDescription="@string/date_icon"
-        app:endIconDrawable="@drawable/calendar_month_24dp"
+        app:endIconDrawable="@drawable/ic_calendar_month"
         app:endIconMode="custom">
 
         <com.google.android.material.textfield.TextInputEditText
@@ -141,7 +141,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Set Up With Google"
-        app:icon="@drawable/google_color_svgrepo_com"
+        app:icon="@drawable/ic_google"
         app:iconGravity="textStart"
         app:iconTint="@null"
         app:shapeAppearance="@style/CustomShapeAppearance" />

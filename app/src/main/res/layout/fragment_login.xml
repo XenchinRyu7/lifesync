@@ -75,7 +75,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Set Up With Google"
-        app:icon="@drawable/google_color_svgrepo_com"
+        app:icon="@drawable/ic_google"
         app:iconGravity="textStart"
         app:iconTint="@null"
         app:shapeAppearance="@style/CustomShapeAppearance" />

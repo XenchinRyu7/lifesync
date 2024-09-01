@@ -15,7 +15,11 @@
         android:id="@+id/navigation_menu"
         android:name="com.saefulrdevs.lifesync.ui.main.menu.MenuFragment"
         android:label="@string/title_menu"
-        tools:layout="@layout/fragment_menu" />
+        tools:layout="@layout/fragment_menu">
+        <action
+            android:id="@+id/action_menuFragment_to_taskFragment"
+            app:destination="@id/taskFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_history"
@@ -28,4 +32,10 @@
         android:name="com.saefulrdevs.lifesync.ui.main.profile.ProfileFragment"
         android:label="@string/title_profile"
         tools:layout="@layout/fragment_history" />
+
+    <fragment
+        android:id="@+id/taskFragment"
+        android:name="com.saefulrdevs.lifesync.ui.main.task.TaskFragment"
+        android:label="TaskFragment"
+        tools:layout="@layout/fragment_task" />
 </navigation>
