@@ -8,9 +8,9 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.saefulrdevs.lifesync.databinding.FragmentHomeBinding
-import com.saefulrdevs.lifesync.viewmodel.CardInProgressAdapter
-import com.saefulrdevs.lifesync.viewmodel.CardTaskGroupAdapter
-import com.saefulrdevs.lifesync.viewmodel.HomeViewModel
+import com.saefulrdevs.lifesync.viewmodel.home.CardInProgressAdapter
+import com.saefulrdevs.lifesync.viewmodel.home.CardTaskGroupAdapter
+import com.saefulrdevs.lifesync.viewmodel.home.HomeViewModel
 
 class HomeFragment : Fragment() {
 

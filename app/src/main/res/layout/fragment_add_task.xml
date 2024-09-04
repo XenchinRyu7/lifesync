@@ -19,8 +19,8 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
-            android:layout_width="20dp"
-            android:layout_height="20dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:src="@drawable/ic_arrow_back"
             app:tint="#050505" />
 
@@ -31,13 +31,9 @@
             android:layout_weight="1"
             android:fontFamily="@font/lexend_deca"
             android:gravity="center"
-            android:text="Today's Tasks"
-            android:textColor="@color/black" />
-
-        <ImageView
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:src="@drawable/ic_notifications_black_24dp" />
+            android:text="Add  Tasks Group"
+            android:textColor="@color/black"
+            android:textSize="20sp" />
 
     </LinearLayout>
 
@@ -324,7 +320,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/lexend_deca"
-                    android:text="Start Date"
+                    android:text="End Date"
                     android:textColor="@color/black" />
 
                 <TextView
