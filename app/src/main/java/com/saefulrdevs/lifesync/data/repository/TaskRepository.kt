@@ -1,91 +1,36 @@
 package com.saefulrdevs.lifesync.data.repository
 
-import android.content.ContentValues
-import android.content.Context
-import android.database.sqlite.SQLiteDatabase
-import com.saefulrdevs.lifesync.data.local.DatabaseHelper
+import com.saefulrdevs.lifesync.data.dao.TaskDao
+import com.saefulrdevs.lifesync.data.dao.TaskGroupDao
 import com.saefulrdevs.lifesync.data.model.Task
+import com.saefulrdevs.lifesync.data.model.TaskGroup
 
-class TaskRepository(context: Context) {
-    private val dbHelper = DatabaseHelper(context)
-    private val db: SQLiteDatabase = dbHelper.writableDatabase
 
-    fun insertTask(task: Task): Long {
-        val values = ContentValues().apply {
-            put(DatabaseHelper.COLUMN_TASK_TITLE, task.title)
-            put(DatabaseHelper.COLUMN_TASK_DESCRIPTION, task.description)
-            put(DatabaseHelper.COLUMN_TASK_DUE_DATE, task.dueDate)
-            put(DatabaseHelper.COLUMN_TASK_IS_COMPLETED, if (task.isCompleted) 1 else 0)
-        }
-        return db.insert(DatabaseHelper.TABLE_TASK, null, values)
+class TaskRepository(private val taskDao: TaskDao, private val taskGroupDao: TaskGroupDao) {
+
+    suspend fun insertTask(task: Task) {
+        taskDao.insertTask(task)
     }
 
-    fun updateTask(task: Task): Int {
-        val values = ContentValues().apply {
-            put(DatabaseHelper.COLUMN_TASK_TITLE, task.title)
-            put(DatabaseHelper.COLUMN_TASK_DESCRIPTION, task.description)
-            put(DatabaseHelper.COLUMN_TASK_DUE_DATE, task.dueDate)
-            put(DatabaseHelper.COLUMN_TASK_IS_COMPLETED, if (task.isCompleted) 1 else 0)
-        }
-        return db.update(
-            DatabaseHelper.TABLE_TASK,
-            values,
-            "${DatabaseHelper.COLUMN_TASK_ID} = ?",
-            arrayOf(task.id.toString())
-        )
+    suspend fun updateTask(task: Task) {
+        taskDao.updateTask(task)
     }
 
-    fun deleteTask(taskId: Long): Int {
-        return db.delete(
-            DatabaseHelper.TABLE_TASK,
-            "${DatabaseHelper.COLUMN_TASK_ID} = ?",
-            arrayOf(taskId.toString())
-        )
+    suspend fun deleteTask(task: Task) {
+        taskDao.deleteTask(task)
     }
 
-    fun getTaskById(taskId: Long): Task? {
-        val cursor = db.query(
-            DatabaseHelper.TABLE_TASK,
-            null,
-            "${DatabaseHelper.COLUMN_TASK_ID} = ?",
-            arrayOf(taskId.toString()),
-            null,
-            null,
-            null
-        )
-        return if (cursor.moveToFirst()) {
-            Task(
-                id = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_TASK_ID)),
-                title = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_TASK_TITLE)),
-                description = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_TASK_DESCRIPTION)),
-                dueDate = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_TASK_DUE_DATE)),
-                isCompleted = cursor.getInt(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_TASK_IS_COMPLETED)) == 1,
-                group = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_TASK_GROUP)),
-                progress = cursor.getInt(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_TASK_PROGRESS)),
-                iconGroup = cursor.getInt(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_TASK_ICON_GROUP))
-            )
-        } else {
-            null
-        }
+    fun getTaskById(taskId: Int): Task? {
+        return taskDao.getTaskById(taskId)
     }
 
     fun getAllTasks(): List<Task> {
-        val tasks = mutableListOf<Task>()
-        val cursor = db.query(DatabaseHelper.TABLE_TASK, null, null, null, null, null, null)
-        while (cursor.moveToNext()) {
-            val task = Task(
-                id = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_TASK_ID)),
-                title = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_TASK_TITLE)),
-                description = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_TASK_DESCRIPTION)),
-                dueDate = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_TASK_DUE_DATE)),
-                isCompleted = cursor.getInt(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_TASK_IS_COMPLETED)) == 1,
-                group = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_TASK_GROUP)),
-                progress = cursor.getInt(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_TASK_PROGRESS)),
-                iconGroup = cursor.getInt(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_TASK_ICON_GROUP))
-            )
-            tasks.add(task)
-        }
-        cursor.close()
-        return tasks
+        return taskDao.getAllTasks()
+    }
+
+    fun getTaskGroupById(groupId: Int): TaskGroup? {
+        return taskGroupDao.getTaskGroupById(groupId)
     }
 }
+
+

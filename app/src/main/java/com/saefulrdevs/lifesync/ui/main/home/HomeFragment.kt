@@ -7,10 +7,12 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.saefulrdevs.lifesync.data.repository.TaskRepository
 import com.saefulrdevs.lifesync.databinding.FragmentHomeBinding
 import com.saefulrdevs.lifesync.viewmodel.home.CardInProgressAdapter
 import com.saefulrdevs.lifesync.viewmodel.home.CardTaskGroupAdapter
 import com.saefulrdevs.lifesync.viewmodel.home.HomeViewModel
+import com.saefulrdevs.lifesync.viewmodel.home.HomeViewModelFactory
 
 class HomeFragment : Fragment() {
 
@@ -28,7 +30,9 @@ class HomeFragment : Fragment() {
     ): View {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
 
-        viewModel = ViewModelProvider(this)[HomeViewModel::class.java]
+        // Inisialisasi ViewModel menggunakan ViewModelFactory dengan DAO yang diperlukan
+        val factory = HomeViewModelFactory(requireActivity().application, taskDao, taskGroupDao)
+        viewModel = ViewModelProvider(this, factory)[HomeViewModel::class.java]
 
         cardTaskGroupAdapter = CardTaskGroupAdapter()
         cardInProgressAdapter = CardInProgressAdapter()
@@ -59,3 +63,4 @@ class HomeFragment : Fragment() {
         _binding = null
     }
 }
+

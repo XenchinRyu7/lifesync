@@ -9,7 +9,8 @@
         android:id="@+id/navigation_home"
         android:name="com.saefulrdevs.lifesync.ui.main.home.HomeFragment"
         android:label="@string/title_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home">
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_menu"
@@ -38,4 +39,16 @@
         android:name="com.saefulrdevs.lifesync.ui.main.task.TaskFragment"
         android:label="TaskFragment"
         tools:layout="@layout/fragment_task" />
+
+    <fragment
+        android:id="@+id/add_task_group"
+        android:name="com.saefulrdevs.lifesync.ui.main.task.AddTaskGroup"
+        android:label="AddTaskGroup"
+        tools:layout="@layout/fragment_add_task_group" />
+
+    <fragment
+        android:id="@+id/add_task"
+        android:name="com.saefulrdevs.lifesync.ui.main.task.AddTask"
+        android:label="AddTask"
+        tools:layout="@layout/fragment_add_task" />
 </navigation>

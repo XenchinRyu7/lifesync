@@ -122,7 +122,7 @@ class RegisterFragment : Fragment() {
                 )
 
                 // Simpan profil menggunakan ViewModel
-                profileViewModel.insertProfile(profile)
+//                profileViewModel.insertProfile(profile)
 
                 // Sign-in berhasil, Anda dapat mengakses akun dan token di sini
                 // accessGoogleDrive(account)

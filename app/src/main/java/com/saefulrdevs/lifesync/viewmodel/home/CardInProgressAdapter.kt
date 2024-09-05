@@ -4,11 +4,13 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.saefulrdevs.lifesync.data.model.Task
+import com.saefulrdevs.lifesync.data.model.TaskWithGroup
+import com.saefulrdevs.lifesync.data.repository.TaskRepository
 import com.saefulrdevs.lifesync.databinding.CardInProgressBinding
 
 class CardInProgressAdapter : RecyclerView.Adapter<CardInProgressAdapter.CardViewHolder>() {
 
-    private var cardList = listOf<Task>()
+    private var cardList = listOf<TaskWithGroup>() // Ubah tipe data
 
     class CardViewHolder(val binding: CardInProgressBinding) : RecyclerView.ViewHolder(binding.root)
 
@@ -22,16 +24,22 @@ class CardInProgressAdapter : RecyclerView.Adapter<CardInProgressAdapter.CardVie
         val currentItem = cardList[position]
 
         holder.binding.apply {
-            titleTaskGroup.text = currentItem.group
-            titleTask.text = currentItem.title
-            iconGroup.setImageResource(currentItem.iconGroup)
-            progressTask.progress = currentItem.progress
+            // Menampilkan title dari TaskGroup jika ada
+            titleTaskGroup.text = currentItem.taskGroup?.title ?: "No Group"
+            titleTask.text = currentItem.task.title
+
+            // Menampilkan icon dari TaskGroup jika ada
+            currentItem.taskGroup?.icon?.let {
+                iconGroup.setImageResource(it)
+            }
+
+            progressTask.progress = currentItem.task.progress
         }
     }
 
     override fun getItemCount() = cardList.size
 
-    fun setCards(cards: List<Task>) {
+    fun setCards(cards: List<TaskWithGroup>) { // Ubah juga parameter menjadi TaskWithGroup
         this.cardList = cards
         notifyDataSetChanged()
     }

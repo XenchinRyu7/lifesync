@@ -19,19 +19,21 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
+            android:id="@+id/btnBack"
             android:layout_width="30dp"
             android:layout_height="30dp"
+            android:contentDescription="Back"
             android:src="@drawable/ic_arrow_back"
             app:tint="#050505" />
 
         <TextView
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_gravity="center"
             android:layout_weight="1"
             android:fontFamily="@font/lexend_deca"
             android:gravity="center"
-            android:text="Add  Tasks Group"
+            android:text="Add  Tasks"
             android:textColor="@color/black"
             android:textSize="20sp" />
 
@@ -134,24 +136,28 @@
 
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
                 android:layout_weight="1"
                 android:fontFamily="@font/lexend_deca"
                 android:text="Project Name"
                 android:textColor="@color/black"
                 android:textSize="10sp" />
 
-            <TextView
+            <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/titleProjectName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:ellipsize="end"
-                android:fontFamily="@font/lexend_deca"
-                android:maxLines="4"
-                android:singleLine="false"
-                android:text="This application is designed for super shops."
-                android:textColor="@color/black"
-                android:textSize="14sp" />
+                android:hint="Project Name">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:maxLines="4"
+                    android:singleLine="false"
+                    android:textColor="@color/black"
+                    android:textSize="14sp" />
+
+            </com.google.android.material.textfield.TextInputLayout>
 
         </LinearLayout>
     </com.google.android.material.card.MaterialCardView>
@@ -183,7 +189,7 @@
 
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
                 android:layout_weight="1"
                 android:fontFamily="@font/lexend_deca"
                 android:text="Description"
@@ -192,17 +198,21 @@
                 tools:layout_editor_absoluteX="63dp"
                 tools:layout_editor_absoluteY="252dp" />
 
-            <TextView
+            <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/descriptionProject"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:ellipsize="end"
-                android:fontFamily="@font/lexend_deca"
-                android:maxLines="4"
-                android:singleLine="false"
-                android:text="This application is designed for super shops. By using this application they can enlist all their products in one place and can deliver. Customers will get a one-stop solution for their daily shopping."
-                android:textColor="@color/black"
-                android:textSize="14sp" />
+                android:hint="Task Description">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:maxLines="4"
+                    android:singleLine="false"
+                    android:textColor="@color/black"
+                    android:textSize="14sp" />
+
+            </com.google.android.material.textfield.TextInputLayout>
 
         </LinearLayout>
     </com.google.android.material.card.MaterialCardView>
@@ -256,8 +266,7 @@
                 <TextView
                     android:id="@+id/startDate"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:layout_height="match_parent"
                     android:fontFamily="@font/lexend_deca"
                     android:text="Office Project"
                     android:textColor="@color/gray"
@@ -326,8 +335,7 @@
                 <TextView
                     android:id="@+id/endDate"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:layout_height="match_parent"
                     android:fontFamily="@font/lexend_deca"
                     android:text="Office Project"
                     android:textColor="@color/gray"

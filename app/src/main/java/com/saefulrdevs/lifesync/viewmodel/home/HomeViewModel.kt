@@ -1,52 +1,79 @@
 package com.saefulrdevs.lifesync.viewmodel.home
 
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.saefulrdevs.lifesync.R
+import com.saefulrdevs.lifesync.data.dao.TaskDao
+import com.saefulrdevs.lifesync.data.dao.TaskGroupDao
+import com.saefulrdevs.lifesync.data.database.DatabaseClient
 import com.saefulrdevs.lifesync.data.model.Task
 import com.saefulrdevs.lifesync.data.model.TaskGroup
+import com.saefulrdevs.lifesync.data.model.TaskWithGroup
+import com.saefulrdevs.lifesync.data.repository.TaskRepository
+import java.util.UUID
 
-class HomeViewModel : ViewModel() {
+class HomeViewModel(
+    application: Application,
+) : AndroidViewModel(application) {
+
+    private val taskDao: TaskDao = DatabaseClient.getInstance(application).taskDao()
+    private val taskGroupDao: TaskGroupDao = DatabaseClient.getInstance(application).taskGroupDao()
+    private val taskRepository: TaskRepository = TaskRepository(taskDao, taskGroupDao)
 
     private val _cardListTaskGroup = MutableLiveData<List<TaskGroup>>()
     val cardListTaskGroup: LiveData<List<TaskGroup>> get() = _cardListTaskGroup
 
-    private val _cardInProgress = MutableLiveData<List<Task>>()
-    val cardInProgress: LiveData<List<Task>> get() = _cardInProgress
+    private val _cardInProgress = MutableLiveData<List<TaskWithGroup>>()
+    val cardInProgress: LiveData<List<TaskWithGroup>> get() = _cardInProgress
 
     init {
-        loadCardsTaskGroup()
-        loadCardInProgress()
+        loadCard()
     }
 
-    private fun loadCardsTaskGroup() {
-        val dummyData = listOf(
-            TaskGroup("Office Project", 5, 85, R.drawable.ic_task_office),
-            TaskGroup("Personal project", 3, 85, R.drawable.personal_project),
-            TaskGroup("Daily Study", 10, 85, R.drawable.ic_books_study)
+    private fun loadCard() {
+        val dummyTaskGroups = listOf(
+            TaskGroup(1, "Office Project", 5, 85, R.drawable.ic_task_office),
+            TaskGroup(2, "Personal Project", 3, 85, R.drawable.lock_icon),
+            TaskGroup(3, "Daily Study", 10, 70, R.drawable.ic_books_study)
         )
-        _cardListTaskGroup.value = dummyData
+
+        val dummyTasks = listOf(
+            TaskWithGroup(
+                Task(
+                    id = UUID.randomUUID().toString(),
+                    title = "Design UI for app",
+                    groupId = 1, // Sesuai dengan TaskGroup id
+                    progress = 70
+                ),
+                dummyTaskGroups[0]
+            ),
+            TaskWithGroup(
+                Task(
+                    id = UUID.randomUUID().toString(),
+                    title = "Finish project setup",
+                    groupId = 2,
+                    progress = 50
+                ),
+                dummyTaskGroups[1]
+            ),
+            TaskWithGroup(
+                Task(
+                    id = UUID.randomUUID().toString(),
+                    title = "Learn Kotlin basics",
+                    groupId = 3,
+                    progress = 90
+                ),
+                dummyTaskGroups[2]
+            )
+        )
+
+        _cardInProgress.value = dummyTasks
     }
 
-    private fun loadCardInProgress() {
-        val dummyData = listOf(
-            Task(
-                "",
-                "Grocery shopping app design",
-                "Office Project",
-                85,
-                R.drawable.ic_task_office
-            ),
-            Task(
-                "",
-                "Create React App",
-                "Personal Project",
-                85,
-                R.drawable.personal_project
-            ),
-            Task("", "Study how to use Git", "Daily Study", 85, R.drawable.ic_books_study)
-        )
-        _cardInProgress.value = dummyData
+    fun getTaskRepository(): TaskRepository {
+        return taskRepository
     }
 }

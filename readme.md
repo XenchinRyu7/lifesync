@@ -45,3 +45,5 @@ After syncing, you can build the project by selecting Build > Make Project from 
 5. Run the app
 Connect an Android device or start an emulator.
 Click the Run button or select Run > Run 'app' from the top menu.
+
+notes: final version will be better
