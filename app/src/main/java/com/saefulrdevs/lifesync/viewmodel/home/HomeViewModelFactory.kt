@@ -9,17 +9,16 @@ import com.saefulrdevs.lifesync.data.repository.TaskRepository
 
 class HomeViewModelFactory(
     private val application: Application,
-    private val taskDao: TaskDao,
-    private val taskGroupDao: TaskGroupDao
+    private val taskRepository: TaskRepository // Hanya taskRepository yang dikirim
 ) : ViewModelProvider.Factory {
 
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(HomeViewModel::class.java)) {
-            val taskRepository = TaskRepository(taskDao, taskGroupDao)
             return HomeViewModel(application, taskRepository) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }
 }
+
 
 

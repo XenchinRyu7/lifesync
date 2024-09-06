@@ -2,18 +2,28 @@ package com.saefulrdevs.lifesync.data.database
 
 import android.content.Context
 import androidx.room.Room
+import com.saefulrdevs.lifesync.data.dao.TaskDao
+import com.saefulrdevs.lifesync.data.dao.TaskGroupDao
 
-object DatabaseClient {
-    private var INSTANCE: AppDatabase? = null
+class DatabaseClient private constructor(context: Context) {
 
-    fun getInstance(context: Context): AppDatabase {
-        if (INSTANCE == null) {
-            INSTANCE = Room.databaseBuilder(
-                context.applicationContext,
-                AppDatabase::class.java,
-                "lifesync.db"
-            ).build()
+    private val appDatabase: AppDatabase = Room.databaseBuilder(
+        context.applicationContext,
+        AppDatabase::class.java, "LifeSync.db"
+    ).build()
+
+    companion object {
+        @Volatile
+        private var INSTANCE: DatabaseClient? = null
+
+        fun getInstance(context: Context): DatabaseClient {
+            return INSTANCE ?: synchronized(this) {
+                INSTANCE ?: DatabaseClient(context).also { INSTANCE = it }
+            }
         }
-        return INSTANCE!!
     }
+
+    fun taskDao(): TaskDao = appDatabase.taskDao()
+    fun taskGroupDao(): TaskGroupDao = appDatabase.taskGroupDao()
 }
+

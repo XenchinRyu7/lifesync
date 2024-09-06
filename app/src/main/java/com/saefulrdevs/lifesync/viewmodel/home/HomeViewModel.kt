@@ -17,11 +17,8 @@ import java.util.UUID
 
 class HomeViewModel(
     application: Application,
+    private val taskRepository: TaskRepository // Dependensi disediakan melalui Factory
 ) : AndroidViewModel(application) {
-
-    private val taskDao: TaskDao = DatabaseClient.getInstance(application).taskDao()
-    private val taskGroupDao: TaskGroupDao = DatabaseClient.getInstance(application).taskGroupDao()
-    private val taskRepository: TaskRepository = TaskRepository(taskDao, taskGroupDao)
 
     private val _cardListTaskGroup = MutableLiveData<List<TaskGroup>>()
     val cardListTaskGroup: LiveData<List<TaskGroup>> get() = _cardListTaskGroup
@@ -30,10 +27,11 @@ class HomeViewModel(
     val cardInProgress: LiveData<List<TaskWithGroup>> get() = _cardInProgress
 
     init {
-        loadCard()
+        loadCard() // Masih menggunakan dummy data untuk sementara
     }
 
     private fun loadCard() {
+        // Dummy data sementara
         val dummyTaskGroups = listOf(
             TaskGroup(1, "Office Project", 5, 85, R.drawable.ic_task_office),
             TaskGroup(2, "Personal Project", 3, 85, R.drawable.lock_icon),
@@ -45,7 +43,7 @@ class HomeViewModel(
                 Task(
                     id = UUID.randomUUID().toString(),
                     title = "Design UI for app",
-                    groupId = 1, // Sesuai dengan TaskGroup id
+                    groupId = 1,
                     progress = 70
                 ),
                 dummyTaskGroups[0]
@@ -70,10 +68,8 @@ class HomeViewModel(
             )
         )
 
+        _cardListTaskGroup.value = dummyTaskGroups
         _cardInProgress.value = dummyTasks
     }
-
-    fun getTaskRepository(): TaskRepository {
-        return taskRepository
-    }
 }
+
