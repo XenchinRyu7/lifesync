@@ -10,7 +10,6 @@ class CardTaskGroupAdapter : RecyclerView.Adapter<CardTaskGroupAdapter.CardViewH
 
     private var cardList = listOf<TaskGroup>()
 
-    // ViewHolder harus menerima binding object dari onCreateViewHolder
     class CardViewHolder(val binding: CardGroupBinding) : RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CardViewHolder {
@@ -23,10 +22,9 @@ class CardTaskGroupAdapter : RecyclerView.Adapter<CardTaskGroupAdapter.CardViewH
 
         holder.binding.apply {
             titleTaskGroup.text = currentItem.title
-            totalTask.text = currentItem.totalTask.toString()
-            iconGroup.setImageResource(currentItem.icon)
-            circularProgressIndicator.progress = currentItem.percentage
-            progressGroup.text = "${currentItem.percentage}%"
+            currentItem.icon?.let { iconGroup.setImageResource(it) }
+            circularProgressIndicator.progress = 10
+            progressGroup.text = "10"
         }
     }
 

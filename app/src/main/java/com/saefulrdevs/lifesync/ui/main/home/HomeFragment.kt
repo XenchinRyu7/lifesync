@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.saefulrdevs.lifesync.data.database.DatabaseClient
+import com.saefulrdevs.lifesync.data.repository.TaskGroupRepository
 import com.saefulrdevs.lifesync.data.repository.TaskRepository
 import com.saefulrdevs.lifesync.databinding.FragmentHomeBinding
 import com.saefulrdevs.lifesync.viewmodel.home.CardInProgressAdapter
@@ -31,16 +32,13 @@ class HomeFragment : Fragment() {
     ): View {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
 
-        // Inisialisasi DAO dengan DatabaseClient
         val taskDao = DatabaseClient.getInstance(requireContext()).taskDao()
         val taskGroupDao = DatabaseClient.getInstance(requireContext()).taskGroupDao()
 
-        // Inisialisasi TaskRepository dengan DAO
-        val taskRepository = TaskRepository(taskDao, taskGroupDao)
+        val taskRepository = TaskRepository(taskDao)
+        val taskGroupRepository = TaskGroupRepository(taskGroupDao)
 
-        // Inisialisasi ViewModelFactory menggunakan TaskRepository
-        val factory = HomeViewModelFactory(requireActivity().application, taskRepository)
-        viewModel = ViewModelProvider(this, factory)[HomeViewModel::class.java]
+        val factory = HomeViewModelFactory(requireActivity().application, taskRepository, taskGroupRepository)
         viewModel = ViewModelProvider(this, factory)[HomeViewModel::class.java]
 
         cardTaskGroupAdapter = CardTaskGroupAdapter()
@@ -57,11 +55,25 @@ class HomeFragment : Fragment() {
         }
 
         viewModel.cardListTaskGroup.observe(viewLifecycleOwner) { cards ->
-            cardTaskGroupAdapter.setCards(cards)
+            if (cards.isNullOrEmpty()) {
+                binding.tvEmptyMessage.visibility = View.VISIBLE
+                binding.recyclerViewInProgress.visibility = View.GONE
+            } else {
+                binding.tvEmptyMessage.visibility = View.GONE
+                binding.recyclerViewTaskGroup.visibility = View.VISIBLE
+                cardTaskGroupAdapter.setCards(cards)
+            }
         }
 
         viewModel.cardInProgress.observe(viewLifecycleOwner) { cards ->
-            cardInProgressAdapter.setCards(cards)
+            if (cards.isNullOrEmpty()) {
+                binding.tvEmptyMessageTaskGroup.visibility = View.VISIBLE
+                binding.recyclerViewTaskGroup.visibility = View.GONE
+            } else {
+                binding.tvEmptyMessageTaskGroup.visibility = View.GONE
+                binding.recyclerViewInProgress.visibility = View.VISIBLE
+                cardInProgressAdapter.setCards(cards)
+            }
         }
 
         return binding.root

@@ -23,6 +23,7 @@ import com.saefulrdevs.lifesync.data.model.Profile
 import com.saefulrdevs.lifesync.databinding.FragmentRegisterBinding
 import com.saefulrdevs.lifesync.ui.main.MainActivity
 import com.saefulrdevs.lifesync.ui.main.profile.ProfileViewModel
+import com.saefulrdevs.lifesync.utils.ViewUtils
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -47,7 +48,7 @@ class RegisterFragment : Fragment() {
 
         val birthDateEditText: TextInputEditText = binding.birthDateEditText
         birthDateEditText.setOnClickListener {
-            showDatePicker(birthDateEditText)
+            ViewUtils.showDatePicker(this, birthDateEditText)
         }
 
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -73,24 +74,6 @@ class RegisterFragment : Fragment() {
         }
 
         return binding.root
-    }
-
-    private fun showDatePicker(editText: TextInputEditText) {
-        val datePicker = MaterialDatePicker.Builder.datePicker()
-            .setTitleText("Select Date")
-            .build()
-
-        datePicker.show(parentFragmentManager, "MATERIAL_DATE_PICKER")
-
-        datePicker.addOnPositiveButtonClickListener { selection ->
-            val formattedDate = formatDate(selection)
-            editText.setText(formattedDate)
-        }
-    }
-
-    private fun formatDate(milliseconds: Long): String {
-        val sdf = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
-        return sdf.format(Date(milliseconds))
     }
 
     private fun signIn() {

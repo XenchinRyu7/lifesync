@@ -18,12 +18,13 @@ interface TaskDao {
     fun deleteTask(task: Task): Int
 
     @Query("SELECT * FROM task WHERE id = :taskId")
-    fun getTaskById(taskId: Int): Task?
+    fun getTaskById(taskId: String): LiveData<Task>
 
-    @Query("SELECT * FROM task")
-    fun getAllTasks(): List<Task>
+    @Transaction
+    @Query("SELECT * FROM task WHERE id = :taskId")
+    fun getTaskWithGroup(taskId: String): LiveData<TaskWithGroup>
 
     @Transaction
     @Query("SELECT * FROM task")
-    fun getTasksWithGroup(): LiveData<List<TaskWithGroup>>
+    fun getAllTasksWithGroup(): LiveData<List<TaskWithGroup>>
 }

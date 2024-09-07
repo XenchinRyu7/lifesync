@@ -17,9 +17,11 @@ data class Task(
     @PrimaryKey(autoGenerate = false) val id: String = UUID.randomUUID().toString(),
     val title: String,
     val description: String? = null,
-    val dueDate: String? = null,
+    val startDate: String? = null,
+    val endDate: String? = null,
     val isCompleted: Boolean = false,
     val progress: Int = 0,
-    @ColumnInfo(index = true) val groupId: Int? = null // Bisa null
+    @ColumnInfo(index = true) val groupId: Int? = null
 )
+
 

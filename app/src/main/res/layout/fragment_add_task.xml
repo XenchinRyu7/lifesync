@@ -40,7 +40,7 @@
     </LinearLayout>
 
     <com.google.android.material.card.MaterialCardView
-        android:id="@+id/cardViewTaskManagement"
+        android:id="@+id/cardTaskGroup"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -82,16 +82,16 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:fontFamily="@font/lexend_deca"
-                    android:text="Office Project"
+                    android:text="Project Group"
                     android:textColor="@color/black" />
 
                 <TextView
-                    android:id="@+id/titleTask"
+                    android:id="@+id/taskGroupDescription"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:fontFamily="@font/lexend_deca"
-                    android:text="Office Project"
+                    android:text="Group Description"
                     android:textColor="@color/gray"
                     android:textSize="10sp" />
 
@@ -107,6 +107,21 @@
                 android:layout_marginEnd="8dp"
                 android:src="@drawable/ic_arrow_drop_down"
                 app:tint="@color/black" />
+
+            <LinearLayout
+                android:id="@+id/expandableLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingTop="8dp"
+                android:visibility="gone">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerViewTasks"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
 
         </LinearLayout>
     </com.google.android.material.card.MaterialCardView>
@@ -124,24 +139,14 @@
         app:cardBackgroundColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cardViewTaskManagement">
+        app:layout_constraintTop_toBottomOf="@+id/cardTaskGroup">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_margin="8dp"
-            android:layout_weight="1"
             android:orientation="vertical">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:fontFamily="@font/lexend_deca"
-                android:text="Project Name"
-                android:textColor="@color/black"
-                android:textSize="10sp" />
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/titleProjectName"
@@ -150,8 +155,9 @@
                 android:hint="Project Name">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/textFiledProjectName"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:maxLines="4"
                     android:singleLine="false"
                     android:textColor="@color/black"
@@ -182,21 +188,9 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_margin="8dp"
-            android:layout_weight="1"
             android:orientation="vertical"
             tools:layout_editor_absoluteX="63dp"
             tools:layout_editor_absoluteY="252dp">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:fontFamily="@font/lexend_deca"
-                android:text="Description"
-                android:textColor="@color/black"
-                android:textSize="10sp"
-                tools:layout_editor_absoluteX="63dp"
-                tools:layout_editor_absoluteY="252dp" />
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/descriptionProject"
@@ -205,8 +199,9 @@
                 android:hint="Task Description">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/textFieldProjectDescription"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:maxLines="4"
                     android:singleLine="false"
                     android:textColor="@color/black"
@@ -218,15 +213,12 @@
     </com.google.android.material.card.MaterialCardView>
 
     <com.google.android.material.card.MaterialCardView
-        android:id="@+id/materialCardView3"
+        android:id="@+id/cardStartDate"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
-        android:checkable="true"
-        android:clickable="true"
-        android:focusable="true"
         app:cardBackgroundColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -235,14 +227,16 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:padding="8dp">
 
             <ImageView
                 android:id="@+id/iconStartDate"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_gravity="center"
-                android:src="@drawable/more_horiz_24dp"
+                android:src="@drawable/ic_calendar_month"
+                app:tint="@color/colorPrimary"
                 tools:layout_editor_absoluteX="30dp"
                 tools:layout_editor_absoluteY="296dp" />
 
@@ -261,7 +255,8 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/lexend_deca"
                     android:text="Start Date"
-                    android:textColor="@color/black" />
+                    android:textColor="@color/black"
+                    android:textSize="10sp" />
 
                 <TextView
                     android:id="@+id/startDate"
@@ -269,8 +264,8 @@
                     android:layout_height="match_parent"
                     android:fontFamily="@font/lexend_deca"
                     android:text="Office Project"
-                    android:textColor="@color/gray"
-                    android:textSize="10sp" />
+                    android:textColor="@color/black"
+                    android:textSize="16sp" />
 
             </LinearLayout>
 
@@ -288,30 +283,30 @@
     </com.google.android.material.card.MaterialCardView>
 
     <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cardEndDate"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
-        android:checkable="true"
-        android:clickable="true"
-        android:focusable="true"
         app:cardBackgroundColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/materialCardView3">
+        app:layout_constraintTop_toBottomOf="@+id/cardStartDate">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:padding="8dp">
 
             <ImageView
                 android:id="@+id/iconEndDate"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_gravity="center"
-                android:src="@drawable/more_horiz_24dp"
+                android:src="@drawable/ic_calendar_month"
+                app:tint="@color/colorPrimary"
                 tools:layout_editor_absoluteX="30dp"
                 tools:layout_editor_absoluteY="296dp" />
 
@@ -330,7 +325,8 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/lexend_deca"
                     android:text="End Date"
-                    android:textColor="@color/black" />
+                    android:textColor="@color/black"
+                    android:textSize="10sp" />
 
                 <TextView
                     android:id="@+id/endDate"
@@ -338,8 +334,8 @@
                     android:layout_height="match_parent"
                     android:fontFamily="@font/lexend_deca"
                     android:text="Office Project"
-                    android:textColor="@color/gray"
-                    android:textSize="10sp" />
+                    android:textColor="@color/black"
+                    android:textSize="16sp" />
 
             </LinearLayout>
 
@@ -355,5 +351,20 @@
 
         </LinearLayout>
     </com.google.android.material.card.MaterialCardView>
+
+    <Button
+        android:id="@+id/btnSave"
+        style="?attr/materialButtonOutlinedStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:text="Save"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cardEndDate"
+        app:shapeAppearance="@style/CustomShapeAppearance" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

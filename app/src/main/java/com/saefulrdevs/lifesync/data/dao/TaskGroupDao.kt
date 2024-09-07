@@ -1,5 +1,6 @@
 package com.saefulrdevs.lifesync.data.dao
 
+import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.saefulrdevs.lifesync.data.model.TaskGroup
 
@@ -20,5 +21,5 @@ interface TaskGroupDao {
     fun getTaskGroupById(groupId: Int): TaskGroup?
 
     @Query("SELECT * FROM task_group")
-    fun getAllTaskGroups(): List<TaskGroup>
+    fun getAllTaskGroups(): LiveData<List<TaskGroup>>
 }

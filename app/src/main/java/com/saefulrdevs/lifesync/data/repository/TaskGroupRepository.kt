@@ -1,5 +1,6 @@
 package com.saefulrdevs.lifesync.data.repository
 
+import androidx.lifecycle.LiveData
 import com.saefulrdevs.lifesync.data.dao.TaskGroupDao
 import com.saefulrdevs.lifesync.data.model.TaskGroup
 
@@ -22,7 +23,7 @@ class TaskGroupRepository(private val taskGroupDao: TaskGroupDao) {
         return taskGroupDao.getTaskGroupById(groupId)
     }
 
-    fun getAllTaskGroups(): List<TaskGroup> {
+    fun getAllTaskGroups(): LiveData<List<TaskGroup>> {
         return taskGroupDao.getAllTaskGroups()
     }
 }

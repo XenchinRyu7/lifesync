@@ -10,7 +10,7 @@ import com.saefulrdevs.lifesync.databinding.CardInProgressBinding
 
 class CardInProgressAdapter : RecyclerView.Adapter<CardInProgressAdapter.CardViewHolder>() {
 
-    private var cardList = listOf<TaskWithGroup>() // Ubah tipe data
+    private var cardList = listOf<TaskWithGroup>()
 
     class CardViewHolder(val binding: CardInProgressBinding) : RecyclerView.ViewHolder(binding.root)
 
