@@ -1,31 +1,40 @@
 package com.saefulrdevs.lifesync.ui.main.profile
 
-import androidx.fragment.app.viewModels
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.saefulrdevs.lifesync.R
+import androidx.lifecycle.ViewModelProvider
+import com.saefulrdevs.lifesync.data.database.DatabaseClient
+import com.saefulrdevs.lifesync.data.repository.ProfileRepository
+import com.saefulrdevs.lifesync.databinding.FragmentProfileBinding
+import com.saefulrdevs.lifesync.viewmodel.profile.ProfileViewModel
+import com.saefulrdevs.lifesync.viewmodel.profile.ProfileViewModelFactory
 
 class ProfileFragment : Fragment() {
 
-    companion object {
-        fun newInstance() = ProfileFragment()
-    }
+    private var _binding: FragmentProfileBinding? = null
+    private val binding get() = _binding!!
 
-    private val viewModel: ProfileViewModel by viewModels()
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        // TODO: Use the ViewModel
-    }
+    private lateinit var profileViewModel: ProfileViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        return inflater.inflate(R.layout.fragment_profile, container, false)
+        _binding = FragmentProfileBinding.inflate(inflater, container, false)
+
+        val profileDao = DatabaseClient.getInstance(requireContext()).profileDao()
+
+        val profileRepository = ProfileRepository(profileDao)
+
+        val factory = ProfileViewModelFactory(requireActivity().application, profileRepository)
+        profileViewModel = ViewModelProvider(this, factory)[ProfileViewModel::class.java]
+
+
+
+        return binding.root
     }
+
 }

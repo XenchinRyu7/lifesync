@@ -98,10 +98,15 @@ class AddTask : Fragment() {
             if (binding.expandableLayout.visibility == View.GONE) {
                 // Expand layout dan load data dari database
                 binding.expandableLayout.visibility = View.VISIBLE
+                binding.iconGroup.visibility = View.GONE
+                binding.iconDropdown.visibility = View.GONE
                 loadDataFromDatabase()
             } else {
                 // Collapse layout
+                binding.titleTaskGroup.visibility = View.VISIBLE
                 binding.expandableLayout.visibility = View.GONE
+                binding.iconGroup.visibility = View.VISIBLE
+                binding.iconDropdown.visibility = View.VISIBLE
             }
         }
 
@@ -110,7 +115,6 @@ class AddTask : Fragment() {
 
     @RequiresApi(Build.VERSION_CODES.O)
     private fun loadDataFromDatabase() {
-        // Ambil data dari ViewModel dan observe LiveData
         taskViewModel.getAllTaskGroups().observe(viewLifecycleOwner, Observer { taskGroups ->
             if (taskGroups.isNullOrEmpty()) {
                 binding.titleTaskGroup.text = "Belum ada project group"

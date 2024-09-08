@@ -19,11 +19,14 @@ import com.google.android.gms.tasks.Task
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.textfield.TextInputEditText
 import com.saefulrdevs.lifesync.R
+import com.saefulrdevs.lifesync.data.database.DatabaseClient
 import com.saefulrdevs.lifesync.data.model.Profile
+import com.saefulrdevs.lifesync.data.repository.ProfileRepository
 import com.saefulrdevs.lifesync.databinding.FragmentRegisterBinding
 import com.saefulrdevs.lifesync.ui.main.MainActivity
-import com.saefulrdevs.lifesync.ui.main.profile.ProfileViewModel
 import com.saefulrdevs.lifesync.utils.ViewUtils
+import com.saefulrdevs.lifesync.viewmodel.profile.ProfileViewModel
+import com.saefulrdevs.lifesync.viewmodel.profile.ProfileViewModelFactory
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -44,7 +47,11 @@ class RegisterFragment : Fragment() {
     ): View {
         _binding = FragmentRegisterBinding.inflate(inflater, container, false)
 
-        profileViewModel = ViewModelProvider(this).get(ProfileViewModel::class.java)
+        val profileDao = DatabaseClient.getInstance(requireContext()).profileDao()
+        val profileRepository = ProfileRepository(profileDao)
+
+        val factory = ProfileViewModelFactory(requireActivity().application, profileRepository)
+        profileViewModel = ViewModelProvider(this, factory)[ProfileViewModel::class.java]
 
         val birthDateEditText: TextInputEditText = binding.birthDateEditText
         birthDateEditText.setOnClickListener {
@@ -68,9 +75,24 @@ class RegisterFragment : Fragment() {
 
         val btnRegister = binding.registerBtn
         btnRegister.setOnClickListener {
-            val intent = Intent(requireContext(), MainActivity::class.java)
-            startActivity(intent)
-            requireActivity().finish()
+
+            val firstName = binding.firstNameEditText.text.toString()
+            val lastName = binding.lastNameEditText.text.toString()
+            val email = binding.emailEditText.text.toString()
+            val birthDay = binding.birthDateEditText.text.toString()
+            val phoneNumber = binding.phoneNumberEditText.text.toString()
+            val password = binding.passwordEditText.text.toString()
+
+            val profile = Profile(
+                id = UUID.randomUUID().toString(),
+                name = firstName,
+                username = firstName,
+                password = password,
+                email = email,
+            )
+
+            profileViewModel.insertProfile(profile)
+
         }
 
         return binding.root

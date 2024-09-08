@@ -3,6 +3,7 @@ package com.saefulrdevs.lifesync.data.database
 import android.content.Context
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import com.saefulrdevs.lifesync.data.dao.ProfileDao
 import com.saefulrdevs.lifesync.data.dao.TaskDao
 import com.saefulrdevs.lifesync.data.dao.TaskGroupDao
 
@@ -28,5 +29,6 @@ class DatabaseClient private constructor(context: Context) {
 
     fun taskDao(): TaskDao = appDatabase.taskDao()
     fun taskGroupDao(): TaskGroupDao = appDatabase.taskGroupDao()
+    fun profileDao(): ProfileDao = appDatabase.profileDao()
 }
 
