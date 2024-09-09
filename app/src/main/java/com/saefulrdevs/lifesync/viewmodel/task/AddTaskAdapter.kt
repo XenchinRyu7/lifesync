@@ -14,7 +14,7 @@ class AddTaskAdapter : ListAdapter<TaskGroup, AddTaskAdapter.TaskGroupViewHolder
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TaskGroupViewHolder {
         val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.list_item_task_group, parent, false)
+            .inflate(R.layout.list_items_task_group, parent, false)
         return TaskGroupViewHolder(view)
     }
 
@@ -24,10 +24,12 @@ class AddTaskAdapter : ListAdapter<TaskGroup, AddTaskAdapter.TaskGroupViewHolder
     }
 
     class TaskGroupViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        private val taskGroupTitle: TextView = itemView.findViewById(R.id.taskGroupTitle)
+        private val taskGroupTitle: TextView = itemView.findViewById(R.id.titleTaskGroup)
+        private val taskGroupDescription: TextView = itemView.findViewById(R.id.taskGroupDescription)
 
         fun bind(taskGroup: TaskGroup) {
             taskGroupTitle.text = taskGroup.title
+            taskGroupDescription.text = taskGroup.description
         }
     }
 

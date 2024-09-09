@@ -2,10 +2,12 @@ package com.saefulrdevs.lifesync.ui.main.task
 
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -31,7 +33,7 @@ class AddTask : Fragment() {
     private val binding get() = _binding!!
 
     private lateinit var taskViewModel: TaskViewModel
-    private lateinit var taskAdapter: AddTaskAdapter
+    private lateinit var groupAdapter: ArrayAdapter<String>
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreateView(
@@ -41,15 +43,12 @@ class AddTask : Fragment() {
         _binding = FragmentAddTaskBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        // Inisialisasi DAO dengan DatabaseClient
         val taskDao = DatabaseClient.getInstance(requireContext()).taskDao()
         val taskGroupDao = DatabaseClient.getInstance(requireContext()).taskGroupDao()
 
-        // Inisialisasi TaskRepository dengan DAO
         val taskRepository = TaskRepository(taskDao)
         val taskGroupRepository = TaskGroupRepository(taskGroupDao)
 
-        // Inisialisasi ViewModelFactory menggunakan TaskRepository
         val factory =
             TaskViewModelFactory(requireActivity().application, taskRepository, taskGroupRepository)
         taskViewModel = ViewModelProvider(this, factory)[TaskViewModel::class.java]
@@ -89,26 +88,7 @@ class AddTask : Fragment() {
             // Kembali ke halaman sebelumnya
             navController.popBackStack()
         }
-
-        taskAdapter = AddTaskAdapter()
-        binding.recyclerViewTasks.layoutManager = LinearLayoutManager(context)
-        binding.recyclerViewTasks.adapter = taskAdapter
-
-        binding.cardTaskGroup.setOnClickListener {
-            if (binding.expandableLayout.visibility == View.GONE) {
-                // Expand layout dan load data dari database
-                binding.expandableLayout.visibility = View.VISIBLE
-                binding.iconGroup.visibility = View.GONE
-                binding.iconDropdown.visibility = View.GONE
-                loadDataFromDatabase()
-            } else {
-                // Collapse layout
-                binding.titleTaskGroup.visibility = View.VISIBLE
-                binding.expandableLayout.visibility = View.GONE
-                binding.iconGroup.visibility = View.VISIBLE
-                binding.iconDropdown.visibility = View.VISIBLE
-            }
-        }
+        loadDataFromDatabase()
 
         return root
     }
@@ -116,14 +96,24 @@ class AddTask : Fragment() {
     @RequiresApi(Build.VERSION_CODES.O)
     private fun loadDataFromDatabase() {
         taskViewModel.getAllTaskGroups().observe(viewLifecycleOwner, Observer { taskGroups ->
-            if (taskGroups.isNullOrEmpty()) {
-                binding.titleTaskGroup.text = "Belum ada project group"
-                binding.titleTaskGroup.visibility =
-                    View.VISIBLE
-            } else {
-                binding.titleTaskGroup.visibility =
-                    View.GONE
-                taskAdapter.submitList(taskGroups)
+            if (!taskGroups.isNullOrEmpty()) {
+                // Mengambil hanya nama grup untuk ditampilkan di AutoCompleteTextView
+                val groupNames = taskGroups.map { it.title }
+
+                // Membuat adapter untuk AutoCompleteTextView
+                groupAdapter = ArrayAdapter(
+                    requireContext(),
+                    android.R.layout.simple_dropdown_item_1line,
+                    groupNames
+                )
+
+                // Set adapter ke AutoCompleteTextView
+                binding.listGroup.setAdapter(groupAdapter)
+
+                // Menampilkan dropdown saat diklik
+                binding.listGroup.setOnClickListener {
+                    binding.listGroup.showDropDown()
+                }
             }
         })
     }

@@ -15,39 +15,17 @@ object ViewUtils {
         cardView: CardView? = null,
         textView: TextView? = null
     ) {
-        editText?.setOnClickListener {
-            val datePicker = MaterialDatePicker.Builder.datePicker()
-                .setTitleText("Select Date")
-                .build()
+        val datePicker = MaterialDatePicker.Builder.datePicker()
+            .build()
 
-            datePicker.show(fragment.parentFragmentManager, "MATERIAL_DATE_PICKER")
+        datePicker.show(fragment.parentFragmentManager, "MATERIAL_DATE_PICKER")
 
-            datePicker.addOnPositiveButtonClickListener { selection ->
-                val formattedDate = formatDate(selection)
-                editText.setText(formattedDate)
-            }
-        }
+        datePicker.addOnPositiveButtonClickListener { selection ->
+            val formattedDate = formatDate(selection)
 
-        cardView?.setOnClickListener {
-            val datePicker = MaterialDatePicker.Builder.datePicker()
-                .setTitleText("Select Date")
-                .build()
-
-            datePicker.show(fragment.parentFragmentManager, "MATERIAL_DATE_PICKER")
-
-            datePicker.addOnPositiveButtonClickListener { selection ->
-                val formattedDate = formatDate(selection)
-
-                if (textView != null) {
-                    textView.text = formattedDate
-                } else {
-                    Toast.makeText(
-                        fragment.requireContext(),
-                        "Selected Date: $formattedDate",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
-            }
+            // Tentukan komponen mana yang akan di-update
+            editText?.setText(formattedDate)
+            textView?.text = formattedDate
         }
     }
 }
