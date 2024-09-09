@@ -51,4 +51,10 @@
         android:name="com.saefulrdevs.lifesync.ui.main.task.AddTask"
         android:label="AddTask"
         tools:layout="@layout/fragment_add_task" />
+
+    <fragment
+        android:id="@+id/profile_detail"
+        android:name="com.saefulrdevs.lifesync.ui.main.profile.ProfileDetail"
+        android:label="ProfileDetail"
+        tools:layout="@layout/fragment_profile_detail" />
 </navigation>

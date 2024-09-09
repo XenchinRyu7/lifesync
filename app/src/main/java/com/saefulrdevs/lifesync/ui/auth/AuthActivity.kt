@@ -7,7 +7,9 @@ import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.tabs.TabLayoutMediator
 import com.saefulrdevs.lifesync.databinding.ActivityAuthBinding
 import com.saefulrdevs.lifesync.ui.main.MainActivity
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class AuthActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityAuthBinding
@@ -24,9 +26,9 @@ class AuthActivity : AppCompatActivity() {
 
 
         val sharedPreferencesLogin = getSharedPreferences("LoginPrefs", Context.MODE_PRIVATE)
-        val isLoggedIn = sharedPreferencesLogin.getBoolean("isLoggedIn", false)
+        val userId = sharedPreferencesLogin.getString("userId", null)
 
-        if (isLoggedIn) {
+        if (userId != null) {
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
             finish()

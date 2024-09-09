@@ -2,8 +2,9 @@ package com.saefulrdevs.lifesync.data.repository
 
 import com.saefulrdevs.lifesync.data.dao.ProfileDao
 import com.saefulrdevs.lifesync.data.model.Profile
+import javax.inject.Inject
 
-class ProfileRepository(private val profileDao: ProfileDao) {
+class ProfileRepository @Inject constructor(private val profileDao: ProfileDao) {
     suspend fun insertProfile(profile: Profile) {
         profileDao.insertProfile(profile)
     }

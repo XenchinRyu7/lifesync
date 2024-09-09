@@ -7,7 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -16,22 +16,16 @@ import com.google.android.gms.common.Scopes
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.common.api.Scope
 import com.google.android.gms.tasks.Task
-import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.textfield.TextInputEditText
 import com.saefulrdevs.lifesync.R
-import com.saefulrdevs.lifesync.data.database.DatabaseClient
 import com.saefulrdevs.lifesync.data.model.Profile
-import com.saefulrdevs.lifesync.data.repository.ProfileRepository
 import com.saefulrdevs.lifesync.databinding.FragmentRegisterBinding
-import com.saefulrdevs.lifesync.ui.main.MainActivity
 import com.saefulrdevs.lifesync.utils.ViewUtils
 import com.saefulrdevs.lifesync.viewmodel.profile.ProfileViewModel
-import com.saefulrdevs.lifesync.viewmodel.profile.ProfileViewModelFactory
-import java.text.SimpleDateFormat
-import java.util.Date
-import java.util.Locale
+import dagger.hilt.android.AndroidEntryPoint
 import java.util.UUID
 
+@AndroidEntryPoint
 class RegisterFragment : Fragment() {
 
     private var _binding: FragmentRegisterBinding? = null
@@ -39,19 +33,13 @@ class RegisterFragment : Fragment() {
 
     private val RC_SIGN_IN = 9001
     private lateinit var googleSignInClient: GoogleSignInClient
-    private lateinit var profileViewModel: ProfileViewModel
+    private val profileViewModel: ProfileViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentRegisterBinding.inflate(inflater, container, false)
-
-        val profileDao = DatabaseClient.getInstance(requireContext()).profileDao()
-        val profileRepository = ProfileRepository(profileDao)
-
-        val factory = ProfileViewModelFactory(requireActivity().application, profileRepository)
-        profileViewModel = ViewModelProvider(this, factory)[ProfileViewModel::class.java]
 
         val birthDateEditText: TextInputEditText = binding.birthDateEditText
         birthDateEditText.setOnClickListener {
@@ -76,8 +64,7 @@ class RegisterFragment : Fragment() {
         val btnRegister = binding.registerBtn
         btnRegister.setOnClickListener {
 
-            val firstName = binding.firstNameEditText.text.toString()
-            val lastName = binding.lastNameEditText.text.toString()
+            val fullName = binding.fullNameEditText.text.toString()
             val email = binding.emailEditText.text.toString()
             val birthDay = binding.birthDateEditText.text.toString()
             val phoneNumber = binding.phoneNumberEditText.text.toString()
@@ -85,10 +72,11 @@ class RegisterFragment : Fragment() {
 
             val profile = Profile(
                 id = UUID.randomUUID().toString(),
-                name = firstName,
-                username = firstName,
+                username = fullName,
                 password = password,
                 email = email,
+                birthDay = birthDay,
+                phoneNumber = phoneNumber
             )
 
             profileViewModel.insertProfile(profile)
@@ -120,15 +108,13 @@ class RegisterFragment : Fragment() {
                 val profile = Profile(
                     id = UUID.randomUUID()
                         .toString(),
-                    name = account.displayName ?: "",
                     username = account.displayName ?: "",
                     password = "",
                     email = account.email ?: "",
                     avatarUrl = account.photoUrl.toString()
                 )
 
-                // Simpan profil menggunakan ViewModel
-//                profileViewModel.insertProfile(profile)
+                profileViewModel.insertProfile(profile)
 
                 // Sign-in berhasil, Anda dapat mengakses akun dan token di sini
                 // accessGoogleDrive(account)
