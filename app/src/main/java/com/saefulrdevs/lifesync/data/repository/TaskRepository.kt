@@ -6,9 +6,10 @@ import com.saefulrdevs.lifesync.data.dao.TaskGroupDao
 import com.saefulrdevs.lifesync.data.model.Task
 import com.saefulrdevs.lifesync.data.model.TaskGroup
 import com.saefulrdevs.lifesync.data.model.TaskWithGroup
+import javax.inject.Inject
 
 
-class TaskRepository(private val taskDao: TaskDao) {
+class TaskRepository @Inject constructor(private val taskDao: TaskDao) {
 
     suspend fun insertTask(task: Task) {
         taskDao.insertTask(task)

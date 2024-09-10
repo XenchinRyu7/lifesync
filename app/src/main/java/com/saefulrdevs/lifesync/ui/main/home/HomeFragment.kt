@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.saefulrdevs.lifesync.data.database.DatabaseClient
@@ -14,14 +15,15 @@ import com.saefulrdevs.lifesync.databinding.FragmentHomeBinding
 import com.saefulrdevs.lifesync.viewmodel.home.CardInProgressAdapter
 import com.saefulrdevs.lifesync.viewmodel.home.CardTaskGroupAdapter
 import com.saefulrdevs.lifesync.viewmodel.home.HomeViewModel
-import com.saefulrdevs.lifesync.viewmodel.home.HomeViewModelFactory
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class HomeFragment : Fragment() {
 
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
 
-    private lateinit var viewModel: HomeViewModel
+    private val viewModel: HomeViewModel by viewModels()
     private lateinit var cardTaskGroupAdapter: CardTaskGroupAdapter
     private lateinit var cardInProgressAdapter: CardInProgressAdapter
 
@@ -31,15 +33,6 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
-
-        val taskDao = DatabaseClient.getInstance(requireContext()).taskDao()
-        val taskGroupDao = DatabaseClient.getInstance(requireContext()).taskGroupDao()
-
-        val taskRepository = TaskRepository(taskDao)
-        val taskGroupRepository = TaskGroupRepository(taskGroupDao)
-
-        val factory = HomeViewModelFactory(requireActivity().application, taskRepository, taskGroupRepository)
-        viewModel = ViewModelProvider(this, factory)[HomeViewModel::class.java]
 
         cardTaskGroupAdapter = CardTaskGroupAdapter()
         cardInProgressAdapter = CardInProgressAdapter()

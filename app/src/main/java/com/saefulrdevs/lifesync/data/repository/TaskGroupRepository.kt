@@ -3,9 +3,10 @@ package com.saefulrdevs.lifesync.data.repository
 import androidx.lifecycle.LiveData
 import com.saefulrdevs.lifesync.data.dao.TaskGroupDao
 import com.saefulrdevs.lifesync.data.model.TaskGroup
+import javax.inject.Inject
 
 
-class TaskGroupRepository(private val taskGroupDao: TaskGroupDao) {
+class TaskGroupRepository @Inject constructor(private val taskGroupDao: TaskGroupDao) {
 
     suspend fun insertTaskGroup(taskGroup: TaskGroup) {
         taskGroupDao.insertTaskGroup(taskGroup)

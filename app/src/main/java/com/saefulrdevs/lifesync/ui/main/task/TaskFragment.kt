@@ -7,19 +7,20 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.get
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.saefulrdevs.lifesync.databinding.FragmentTaskBinding
 import com.saefulrdevs.lifesync.viewmodel.task.CardDateAdapter
 import com.saefulrdevs.lifesync.viewmodel.task.TaskViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class TaskFragment : Fragment() {
     private var _binding: FragmentTaskBinding? = null
     private val binding get() = _binding!!
 
-    private lateinit var viewModel: TaskViewModel
+    private val taskViewModel: TaskViewModel by viewModels()
     private lateinit var cardDateAdapter: CardDateAdapter
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -31,9 +32,6 @@ class TaskFragment : Fragment() {
         val root: View = binding.root
 
         val navController = findNavController()
-
-        viewModel = ViewModelProvider(this)[TaskViewModel::class.java]
-
         cardDateAdapter = CardDateAdapter()
 
         binding.recyclerViewDate.apply {
@@ -41,7 +39,7 @@ class TaskFragment : Fragment() {
             adapter = cardDateAdapter
         }
 
-        viewModel.cardListDate.observe(viewLifecycleOwner) { cards ->
+        taskViewModel.cardListDate.observe(viewLifecycleOwner) { cards ->
             cardDateAdapter.setCards(cards)
         }
 

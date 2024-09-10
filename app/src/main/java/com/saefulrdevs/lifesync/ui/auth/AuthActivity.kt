@@ -4,7 +4,9 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContentProviderCompat.requireContext
 import com.google.android.material.tabs.TabLayoutMediator
+import com.saefulrdevs.lifesync.App
 import com.saefulrdevs.lifesync.databinding.ActivityAuthBinding
 import com.saefulrdevs.lifesync.ui.main.MainActivity
 import dagger.hilt.android.AndroidEntryPoint
@@ -24,16 +26,14 @@ class AuthActivity : AppCompatActivity() {
         editor.putBoolean("hasAccessedAuth", true)
         editor.apply()
 
-
-        val sharedPreferencesLogin = getSharedPreferences("LoginPrefs", Context.MODE_PRIVATE)
-        val userId = sharedPreferencesLogin.getString("userId", null)
+        val app = this.applicationContext as App
+        val userId = app.userId
 
         if (userId != null) {
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
             finish()
         }
-
 
         val viewPager = binding.viewPager
         val tabLayout = binding.tabLayout

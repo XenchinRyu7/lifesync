@@ -5,22 +5,21 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import com.saefulrdevs.lifesync.data.database.DatabaseClient
 import com.saefulrdevs.lifesync.data.model.TaskGroup
-import com.saefulrdevs.lifesync.data.repository.TaskGroupRepository
 import com.saefulrdevs.lifesync.databinding.FragmentAddTaskGroupBinding
 import com.saefulrdevs.lifesync.utils.ViewUtils
 import com.saefulrdevs.lifesync.viewmodel.task.TaskGroupViewModel
-import com.saefulrdevs.lifesync.viewmodel.task.TaskGroupViewModelFactory
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class AddTaskGroup : Fragment() {
 
     private var _binding: FragmentAddTaskGroupBinding? = null
     private val binding get() = _binding!!
 
-    private lateinit var taskGroupViewModel: TaskGroupViewModel
+    private val taskGroupViewModel: TaskGroupViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -28,13 +27,6 @@ class AddTaskGroup : Fragment() {
     ): View {
         _binding = FragmentAddTaskGroupBinding.inflate(inflater, container, false)
         val root: View = binding.root
-
-        val taskGroupDao = DatabaseClient.getInstance(requireContext()).taskGroupDao()
-
-        val taskGroupRepository = TaskGroupRepository(taskGroupDao)
-        val factory = TaskGroupViewModelFactory(requireActivity().application, taskGroupRepository)
-        taskGroupViewModel = ViewModelProvider(this, factory)[TaskGroupViewModel::class.java]
-
         val navController = findNavController()
 
         val btnBack = binding.btnBack

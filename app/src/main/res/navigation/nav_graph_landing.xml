@@ -6,9 +6,9 @@
     app:startDestination="@id/landingScreenFragment">
     <fragment
         android:id="@+id/landingScreenFragment"
-        android:name="com.saefulrdevs.lifesync.ui.started.LandingScreen"
+        android:name="com.saefulrdevs.lifesync.ui.started.LandingApp"
         android:label="StartedScreen"
-        tools:layout="@layout/fragment_landing_screen">
+        tools:layout="@layout/fragment_landing_app">
         <action
             android:id="@+id/startLandingScreen1"
             app:destination="@id/landingScreenFragment1" />
@@ -16,9 +16,9 @@
 
     <fragment
         android:id="@+id/landingScreenFragment1"
-        android:name="com.saefulrdevs.lifesync.ui.started.LandingScreen1"
+        android:name="com.saefulrdevs.lifesync.ui.started.TaskManagement"
         android:label="StartedScreen1"
-        tools:layout="@layout/fragment_landing_screen1">
+        tools:layout="@layout/fragment_landing_task_management">
         <action
             android:id="@+id/startLandingScreen2"
             app:destination="@id/landingScreenFragment2" />
@@ -26,9 +26,9 @@
 
     <fragment
         android:id="@+id/landingScreenFragment2"
-        android:name="com.saefulrdevs.lifesync.ui.started.LandingScreen2"
+        android:name="com.saefulrdevs.lifesync.ui.started.MoneyManagement"
         android:label="StartedScreen3"
-        tools:layout="@layout/fragment_landing_screen2">
+        tools:layout="@layout/fragment_landing_money_management">
         <action
             android:id="@+id/startLandingScreen3"
             app:destination="@id/landingScreenFragment3" />
@@ -36,9 +36,9 @@
 
     <fragment
         android:id="@+id/landingScreenFragment3"
-        android:name="com.saefulrdevs.lifesync.ui.started.LandingScreen3"
+        android:name="com.saefulrdevs.lifesync.ui.started.LandingScheduler"
         android:label="StartedScreen3"
-        tools:layout="@layout/fragment_landing_screen3">
+        tools:layout="@layout/fragment_landing_scheduler">
 
     </fragment>
 

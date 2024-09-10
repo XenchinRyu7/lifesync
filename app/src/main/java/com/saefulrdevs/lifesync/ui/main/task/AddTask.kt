@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import androidx.annotation.RequiresApi
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -22,17 +23,18 @@ import com.saefulrdevs.lifesync.data.repository.TaskRepository
 import com.saefulrdevs.lifesync.databinding.FragmentAddTaskBinding
 import com.saefulrdevs.lifesync.utils.ViewUtils
 import com.saefulrdevs.lifesync.viewmodel.home.HomeViewModel
-import com.saefulrdevs.lifesync.viewmodel.home.HomeViewModelFactory
 import com.saefulrdevs.lifesync.viewmodel.task.AddTaskAdapter
 import com.saefulrdevs.lifesync.viewmodel.task.TaskViewModel
 import com.saefulrdevs.lifesync.viewmodel.task.TaskViewModelFactory
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class AddTask : Fragment() {
 
     private var _binding: FragmentAddTaskBinding? = null
     private val binding get() = _binding!!
 
-    private lateinit var taskViewModel: TaskViewModel
+    private val taskViewModel: TaskViewModel by viewModels()
     private lateinit var groupAdapter: ArrayAdapter<String>
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -42,16 +44,6 @@ class AddTask : Fragment() {
     ): View {
         _binding = FragmentAddTaskBinding.inflate(inflater, container, false)
         val root: View = binding.root
-
-        val taskDao = DatabaseClient.getInstance(requireContext()).taskDao()
-        val taskGroupDao = DatabaseClient.getInstance(requireContext()).taskGroupDao()
-
-        val taskRepository = TaskRepository(taskDao)
-        val taskGroupRepository = TaskGroupRepository(taskGroupDao)
-
-        val factory =
-            TaskViewModelFactory(requireActivity().application, taskRepository, taskGroupRepository)
-        taskViewModel = ViewModelProvider(this, factory)[TaskViewModel::class.java]
 
         val navController = findNavController()
 
@@ -81,11 +73,8 @@ class AddTask : Fragment() {
                 endDate = endDate
             )
 
-            // Simpan task ke data
-            // base melalui ViewModel
             taskViewModel.insertTask(task)
 
-            // Kembali ke halaman sebelumnya
             navController.popBackStack()
         }
         loadDataFromDatabase()
@@ -97,20 +86,16 @@ class AddTask : Fragment() {
     private fun loadDataFromDatabase() {
         taskViewModel.getAllTaskGroups().observe(viewLifecycleOwner, Observer { taskGroups ->
             if (!taskGroups.isNullOrEmpty()) {
-                // Mengambil hanya nama grup untuk ditampilkan di AutoCompleteTextView
                 val groupNames = taskGroups.map { it.title }
 
-                // Membuat adapter untuk AutoCompleteTextView
                 groupAdapter = ArrayAdapter(
                     requireContext(),
                     android.R.layout.simple_dropdown_item_1line,
                     groupNames
                 )
 
-                // Set adapter ke AutoCompleteTextView
                 binding.listGroup.setAdapter(groupAdapter)
 
-                // Menampilkan dropdown saat diklik
                 binding.listGroup.setOnClickListener {
                     binding.listGroup.showDropDown()
                 }

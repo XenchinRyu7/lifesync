@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.saefulrdevs.lifesync.App
 import com.saefulrdevs.lifesync.databinding.FragmentProfileDetailBinding
 import com.saefulrdevs.lifesync.viewmodel.profile.ProfileViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -32,9 +33,8 @@ class ProfileDetail : Fragment() {
             navController.popBackStack()
         }
 
-        val sharedPreferences =
-            requireContext().getSharedPreferences("LoginPrefs", Context.MODE_PRIVATE)
-        val userId = sharedPreferences.getString("userId", null)
+        val app = requireContext().applicationContext as App
+        val userId = app.userId
 
         if (userId != null) {
             profileViewModel.getProfileById(userId) { profile ->

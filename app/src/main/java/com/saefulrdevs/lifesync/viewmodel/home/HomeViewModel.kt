@@ -8,8 +8,11 @@ import com.saefulrdevs.lifesync.data.model.TaskGroup
 import com.saefulrdevs.lifesync.data.model.TaskWithGroup
 import com.saefulrdevs.lifesync.data.repository.TaskGroupRepository
 import com.saefulrdevs.lifesync.data.repository.TaskRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
-class HomeViewModel(
+@HiltViewModel
+class HomeViewModel @Inject constructor(
     application: Application,
     private val taskRepository: TaskRepository,
     private val taskGroupRepository: TaskGroupRepository

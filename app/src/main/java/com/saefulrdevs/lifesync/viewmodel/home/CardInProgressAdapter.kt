@@ -24,11 +24,9 @@ class CardInProgressAdapter : RecyclerView.Adapter<CardInProgressAdapter.CardVie
         val currentItem = cardList[position]
 
         holder.binding.apply {
-            // Menampilkan title dari TaskGroup jika ada
             titleTaskGroup.text = currentItem.taskGroup?.title ?: "No Group"
             titleTask.text = currentItem.task.title
 
-            // Menampilkan icon dari TaskGroup jika ada
             currentItem.taskGroup?.icon?.let {
                 iconGroup.setImageResource(it)
             }
@@ -39,7 +37,7 @@ class CardInProgressAdapter : RecyclerView.Adapter<CardInProgressAdapter.CardVie
 
     override fun getItemCount() = cardList.size
 
-    fun setCards(cards: List<TaskWithGroup>) { // Ubah juga parameter menjadi TaskWithGroup
+    fun setCards(cards: List<TaskWithGroup>) {
         this.cardList = cards
         notifyDataSetChanged()
     }
