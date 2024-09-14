@@ -51,7 +51,7 @@ class ProfileFragment : Fragment() {
                 .setMessage("Apakah anda yakin ingin logout?")
                 .setIcon(R.drawable.ic_logout)
                 .setNegativeButton("Cancel") { dialog, _ ->
-                    dialog.dismiss() // Close the dialog
+                    dialog.dismiss()
                 }
                 .setPositiveButton("Ok") { dialog, _ ->
                     app.userId = null

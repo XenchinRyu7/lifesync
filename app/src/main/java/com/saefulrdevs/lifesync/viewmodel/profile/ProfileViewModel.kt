@@ -22,9 +22,12 @@ class ProfileViewModel @Inject constructor(
         }
     }
 
-    fun updateProfile(profile: Profile) {
+    fun updateProfile(profile: Profile, onResult: (Boolean) -> Unit) {
         viewModelScope.launch(Dispatchers.IO) {
-            profileRepository.updateProfile(profile)
+            val isSuccess = profileRepository.updateProfile(profile)
+            withContext(Dispatchers.Main) {
+                onResult(isSuccess)
+            }
         }
     }
 

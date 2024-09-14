@@ -9,8 +9,13 @@ class ProfileRepository @Inject constructor(private val profileDao: ProfileDao) 
         profileDao.insertProfile(profile)
     }
 
-    suspend fun updateProfile(profile: Profile) {
-        profileDao.updateProfile(profile)
+    suspend fun updateProfile(profile: Profile): Boolean {
+        return try {
+            profileDao.updateProfile(profile)
+            true
+        } catch (e: Exception) {
+            false
+        }
     }
 
     suspend fun deleteProfile(profile: Profile) {

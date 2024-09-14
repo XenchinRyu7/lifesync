@@ -15,7 +15,7 @@ interface ProfileDao {
     fun insertProfile(profile: Profile)
 
     @Update
-    fun updateProfile(profile: Profile)
+    suspend fun updateProfile(profile: Profile)
 
     @Delete
     fun deleteProfile(profile: Profile)
