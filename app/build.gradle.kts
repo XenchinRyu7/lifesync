@@ -88,4 +88,7 @@ dependencies {
     implementation(libs.dagger.hilt)
     ksp(libs.dagger.hilt.android.compiler)
     ksp(libs.dagger.hilt.compiler)
+
+    implementation (libs.android.mail)
+    implementation (libs.android.activation)
 }

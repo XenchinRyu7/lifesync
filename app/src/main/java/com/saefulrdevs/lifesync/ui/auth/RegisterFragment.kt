@@ -1,13 +1,18 @@
 package com.saefulrdevs.lifesync.ui.auth
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.NavController
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -20,6 +25,8 @@ import com.google.android.material.textfield.TextInputEditText
 import com.saefulrdevs.lifesync.R
 import com.saefulrdevs.lifesync.data.model.Profile
 import com.saefulrdevs.lifesync.databinding.FragmentRegisterBinding
+import com.saefulrdevs.lifesync.ui.main.MainActivity
+import com.saefulrdevs.lifesync.utils.EmailUtils
 import com.saefulrdevs.lifesync.utils.ViewUtils
 import com.saefulrdevs.lifesync.viewmodel.profile.ProfileViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -35,15 +42,15 @@ class RegisterFragment : Fragment() {
     private lateinit var googleSignInClient: GoogleSignInClient
     private val profileViewModel: ProfileViewModel by viewModels()
 
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentRegisterBinding.inflate(inflater, container, false)
 
-        val birthDateEditText: TextInputEditText = binding.birthDateEditText
-        birthDateEditText.setOnClickListener {
-            ViewUtils.showDatePicker(this, birthDateEditText)
+        binding.birthDateEditText.setOnClickListener {
+            ViewUtils.showDatePicker(this, binding.birthDateEditText)
         }
 
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -79,8 +86,37 @@ class RegisterFragment : Fragment() {
                 phoneNumber = phoneNumber
             )
 
-            profileViewModel.insertProfile(profile)
+            profileViewModel.insertProfile(profile) { isSuccess ->
+                if (isSuccess) {
+                    // Generate kode verifikasi
+                    val verificationCode = EmailUtils.generateVerificationCode()
 
+                    // Simpan kode di SharedPreferences
+                    EmailUtils.saveVerificationCodeToSharedPreferences(
+                        requireContext(),
+                        verificationCode
+                    )
+
+                    // Kirim email dengan kode verifikasi
+                    EmailUtils.sendVerificationEmail(email, verificationCode)
+
+                    // Navigasi ke VerificationFragment dengan bundle
+                    val bundle = Bundle().apply {
+                        putString("email", email)
+                    }
+
+                    val intent = Intent(requireContext(), VerificationActivity::class.java)
+                    intent.putExtras(bundle)  // Sertakan bundle dalam intent
+                    startActivity(intent)
+                    requireActivity().finish()
+                } else {
+                    Toast.makeText(
+                        context,
+                        "Register Gagal, silahkan coba lagi",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
         }
 
         return binding.root
@@ -114,7 +150,7 @@ class RegisterFragment : Fragment() {
                     avatarUrl = account.photoUrl.toString()
                 )
 
-                profileViewModel.insertProfile(profile)
+//                profileViewModel.insertProfile(profile)
 
                 // Sign-in berhasil, Anda dapat mengakses akun dan token di sini
                 // accessGoogleDrive(account)

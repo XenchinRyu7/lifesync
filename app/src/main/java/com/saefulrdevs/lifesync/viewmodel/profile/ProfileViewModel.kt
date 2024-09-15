@@ -16,8 +16,12 @@ import javax.inject.Inject
 class ProfileViewModel @Inject constructor(
     private val profileRepository: ProfileRepository
 ) : ViewModel() {
-    fun insertProfile(profile: Profile) {
+    fun insertProfile(profile: Profile, onResult: (Boolean) -> Unit) {
         viewModelScope.launch(Dispatchers.IO) {
+            val isSuccess = profileRepository.insertProfile(profile)
+            withContext(Dispatchers.Main) {
+                onResult(isSuccess)
+            }
             profileRepository.insertProfile(profile)
         }
     }

@@ -37,37 +37,41 @@ class LoginFragment : Fragment() {
             val email = binding.emailEditText.text.toString()
             val password = binding.passwordEditText.text.toString()
 
-            profileViewModel.getProfileByEmail(email) { profile ->
-                requireActivity().runOnUiThread {
-                    if (profile != null) {
-                        if (profile.password == password) {
-                            Toast.makeText(requireContext(), "Login berhasil", Toast.LENGTH_SHORT)
-                                .show()
+            val intent = Intent(requireContext(), MainActivity::class.java)
+            startActivity(intent)
+            requireActivity().finish()
 
-                            val sharedPreferences = requireContext().getSharedPreferences(
-                                "LoginPrefs",
-                                Context.MODE_PRIVATE
-                            )
-                            val editor = sharedPreferences.edit()
-                            editor.putString("userId", profile.id)
-                            editor.apply()
-
-                            val intent = Intent(requireContext(), MainActivity::class.java)
-                            startActivity(intent)
-                            requireActivity().finish()
-                        } else {
-                            Toast.makeText(requireContext(), "Password salah", Toast.LENGTH_SHORT)
-                                .show()
-                        }
-                    } else {
-                        Toast.makeText(
-                            requireContext(),
-                            "Email tidak ditemukan",
-                            Toast.LENGTH_SHORT
-                        ).show()
-                    }
-                }
-            }
+//            profileViewModel.getProfileByEmail(email) { profile ->
+//                requireActivity().runOnUiThread {
+//                    if (profile != null) {
+//                        if (profile.password == password) {
+//                            Toast.makeText(requireContext(), "Login berhasil", Toast.LENGTH_SHORT)
+//                                .show()
+//
+//                            val sharedPreferences = requireContext().getSharedPreferences(
+//                                "LoginPrefs",
+//                                Context.MODE_PRIVATE
+//                            )
+//                            val editor = sharedPreferences.edit()
+//                            editor.putString("userId", profile.id)
+//                            editor.apply()
+//
+//                            val intent = Intent(requireContext(), MainActivity::class.java)
+//                            startActivity(intent)
+//                            requireActivity().finish()
+//                        } else {
+//                            Toast.makeText(requireContext(), "Password salah", Toast.LENGTH_SHORT)
+//                                .show()
+//                        }
+//                    } else {
+//                        Toast.makeText(
+//                            requireContext(),
+//                            "Email tidak ditemukan",
+//                            Toast.LENGTH_SHORT
+//                        ).show()
+//                    }
+//                }
+//            }
         }
 
         return binding.root

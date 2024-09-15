@@ -4,9 +4,11 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContentProviderCompat.requireContext
+import androidx.navigation.NavController
+import androidx.navigation.findNavController
 import com.google.android.material.tabs.TabLayoutMediator
 import com.saefulrdevs.lifesync.App
+import com.saefulrdevs.lifesync.R
 import com.saefulrdevs.lifesync.databinding.ActivityAuthBinding
 import com.saefulrdevs.lifesync.ui.main.MainActivity
 import dagger.hilt.android.AndroidEntryPoint

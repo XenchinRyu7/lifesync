@@ -12,7 +12,7 @@ class DatabaseClient private constructor(context: Context) {
     private val appDatabase: AppDatabase = Room.databaseBuilder(
         context.applicationContext,
         AppDatabase::class.java, "LifeSync.db"
-    ).setJournalMode(RoomDatabase.JournalMode.WRITE_AHEAD_LOGGING)
+    ).setJournalMode(RoomDatabase.JournalMode.TRUNCATE)
         .fallbackToDestructiveMigration()
         .build()
 

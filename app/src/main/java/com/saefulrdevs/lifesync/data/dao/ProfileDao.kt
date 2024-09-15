@@ -12,10 +12,10 @@ import com.saefulrdevs.lifesync.data.model.Profile
 interface ProfileDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertProfile(profile: Profile)
+    suspend fun insertProfile(profile: Profile): Long
 
     @Update
-    suspend fun updateProfile(profile: Profile)
+    suspend fun updateProfile(profile: Profile): Int
 
     @Delete
     fun deleteProfile(profile: Profile)

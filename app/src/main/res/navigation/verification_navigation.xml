@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/verification_navigation"
+    app:startDestination="@id/verificationEmailFragment">
+    <fragment
+        android:id="@+id/verificationEmailFragment"
+        android:name="com.saefulrdevs.lifesync.ui.auth.EmailVerification"
+        android:label="Verification Email Fragment"
+        tools:layout="@layout/fragment_email_verification">
+        <action
+            android:id="@+id/action_verificationEmailFragment_to_pinFragment"
+            app:destination="@id/pinFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/pinFragment"
+        android:name="com.saefulrdevs.lifesync.ui.auth.PinFragment"
+        android:label="PIN Fragment"
+        tools:layout="@layout/fragment_pin" />
+
+</navigation>

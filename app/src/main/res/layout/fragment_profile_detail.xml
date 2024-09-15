@@ -39,6 +39,14 @@
             android:textColor="@color/black"
             android:textSize="20sp" />
 
+        <ImageView
+            android:id="@+id/btnCheckUpdate"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:contentDescription="Back"
+            android:src="@drawable/ic_pen"
+            app:tint="#050505" />
+
     </LinearLayout>
 
     <LinearLayout
@@ -101,7 +109,8 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/fullNameEditText"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:enabled="false" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -126,8 +135,9 @@
             android:id="@+id/birthDateEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:clickable="true"
-            android:focusable="true"
+            android:clickable="false"
+            android:enabled="false"
+            android:focusable="false"
             android:focusableInTouchMode="false"
             android:inputType="none" />
     </com.google.android.material.textfield.TextInputLayout>
@@ -149,7 +159,8 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/phoneNumberEditText"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:enabled="false" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -161,6 +172,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
+        android:enabled="false"
         android:text="Update"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

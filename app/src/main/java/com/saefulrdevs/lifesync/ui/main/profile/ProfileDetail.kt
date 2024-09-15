@@ -16,6 +16,7 @@ import com.saefulrdevs.lifesync.R
 import com.saefulrdevs.lifesync.data.model.Profile
 import com.saefulrdevs.lifesync.databinding.FragmentProfileDetailBinding
 import com.saefulrdevs.lifesync.ui.auth.AuthActivity
+import com.saefulrdevs.lifesync.utils.ViewUtils
 import com.saefulrdevs.lifesync.viewmodel.profile.ProfileViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.UUID
@@ -27,6 +28,13 @@ class ProfileDetail : Fragment() {
     private val binding get() = _binding!!
 
     private val profileViewModel: ProfileViewModel by viewModels()
+    private var fullName: String? = null
+    private var birthDay: String? = null
+    private var phoneNumber: String? = null
+    private var email: String? = null
+    private var avatarUrl: String? = null
+    private var pin: Int? = null
+    private var password: String? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -45,13 +53,58 @@ class ProfileDetail : Fragment() {
 
         if (userId != null) {
             profileViewModel.getProfileById(userId) { profile ->
-                binding.fullName.text = profile?.username
-                binding.tvEmail.text = profile?.email
-                binding.fullNameEditText.setText(profile?.username)
-                binding.birthDateEditText.setText(profile?.birthDay)
-                binding.phoneNumberEditText.setText(profile?.phoneNumber)
+                fullName = profile?.username
+                birthDay = profile?.birthDay
+                phoneNumber = profile?.phoneNumber
+                email = profile?.email
+                avatarUrl = profile?.avatarUrl
+                pin = profile?.pin
+                password = profile?.password
+
+                binding.fullName.text = fullName
+                binding.tvEmail.text = email
+                binding.fullNameEditText.setText(fullName)
+                binding.birthDateEditText.setText(birthDay)
+                binding.phoneNumberEditText.setText(birthDay)
             }
         }
+
+        binding.birthDateEditText.setOnClickListener {
+            ViewUtils.showDatePicker(this, binding.birthDateEditText)
+        }
+
+        var isEditMode = false
+
+        binding.btnCheckUpdate.setOnClickListener {
+            if (isEditMode) {
+                binding.fullNameEditText.isEnabled = false
+                binding.birthDateEditText.isEnabled = false
+                binding.phoneNumberEditText.isEnabled = false
+                binding.birthDateEditText.isClickable = false
+                binding.birthDateEditText.isFocusable = false
+                binding.btnUpdateProfile.isEnabled = false
+                Toast.makeText(
+                    context,
+                    "Edit Mode Disable",
+                    Toast.LENGTH_SHORT
+                ).show()
+            } else {
+                binding.fullNameEditText.isEnabled = true
+                binding.birthDateEditText.isEnabled = true
+                binding.phoneNumberEditText.isEnabled = true
+                binding.birthDateEditText.isClickable = true
+                binding.birthDateEditText.isFocusable = true
+                binding.btnUpdateProfile.isEnabled = true
+                Toast.makeText(
+                    context,
+                    "Edit Mode Enable",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+
+            isEditMode = !isEditMode
+        }
+
 
         binding.btnUpdateProfile.setOnClickListener {
             MaterialAlertDialogBuilder(requireContext())
@@ -68,18 +121,26 @@ class ProfileDetail : Fragment() {
                     val phoneNumber = binding.phoneNumberEditText.text.toString()
 
                     val updateProfile = Profile(
+                        id = userId.toString(),
                         username = fullName,
                         birthDay = birthDay,
-                        phoneNumber = phoneNumber
+                        phoneNumber = phoneNumber,
+                        email = email,
+                        avatarUrl = avatarUrl,
+                        pin = pin,
+                        password = password
                     )
 
                     profileViewModel.updateProfile(updateProfile) { isSuccess ->
                         if (isSuccess) {
-                            // Berhasil memperbarui profile
-                            Toast.makeText(context, "Profile updated successfully", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(
+                                context,
+                                "Profile updated successfully",
+                                Toast.LENGTH_SHORT
+                            ).show()
                         } else {
-                            // Gagal memperbarui profile
-                            Toast.makeText(context, "Failed to update profile", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(context, "Failed to update profile", Toast.LENGTH_SHORT)
+                                .show()
                         }
                     }
                     dialog.dismiss()
