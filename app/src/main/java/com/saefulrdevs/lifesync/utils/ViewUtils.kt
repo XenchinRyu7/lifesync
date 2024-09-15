@@ -1,7 +1,6 @@
 package com.saefulrdevs.lifesync.utils
 
 import android.widget.TextView
-import android.widget.Toast
 import androidx.cardview.widget.CardView
 import androidx.fragment.app.Fragment
 import com.google.android.material.datepicker.MaterialDatePicker

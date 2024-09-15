@@ -1,6 +1,5 @@
 package com.saefulrdevs.lifesync.ui.auth
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -10,9 +9,6 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.navigation.NavController
-import androidx.navigation.findNavController
-import androidx.navigation.fragment.findNavController
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -21,12 +17,11 @@ import com.google.android.gms.common.Scopes
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.common.api.Scope
 import com.google.android.gms.tasks.Task
-import com.google.android.material.textfield.TextInputEditText
 import com.saefulrdevs.lifesync.R
 import com.saefulrdevs.lifesync.data.model.Profile
 import com.saefulrdevs.lifesync.databinding.FragmentRegisterBinding
-import com.saefulrdevs.lifesync.ui.main.MainActivity
 import com.saefulrdevs.lifesync.utils.EmailUtils
+import com.saefulrdevs.lifesync.utils.SendMail
 import com.saefulrdevs.lifesync.utils.ViewUtils
 import com.saefulrdevs.lifesync.viewmodel.profile.ProfileViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -41,7 +36,6 @@ class RegisterFragment : Fragment() {
     private val RC_SIGN_IN = 9001
     private lateinit var googleSignInClient: GoogleSignInClient
     private val profileViewModel: ProfileViewModel by viewModels()
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -86,29 +80,50 @@ class RegisterFragment : Fragment() {
                 phoneNumber = phoneNumber
             )
 
+            if (!isValidEmail(email)) {
+                Toast.makeText(
+                    context,
+                    "Email tidak valid, pastikan formatnya benar!",
+                    Toast.LENGTH_SHORT
+                ).show()
+                return@setOnClickListener
+            }
+
             profileViewModel.insertProfile(profile) { isSuccess ->
                 if (isSuccess) {
-                    // Generate kode verifikasi
                     val verificationCode = EmailUtils.generateVerificationCode()
 
-                    // Simpan kode di SharedPreferences
-                    EmailUtils.saveVerificationCodeToSharedPreferences(
+                    var isSendSuccess = false
+
+                    EmailUtils.sendVerificationEmail(
                         requireContext(),
-                        verificationCode
-                    )
+                        email,
+                        verificationCode,
+                        object : SendMail.OnMailSendListener {
+                            override fun onSuccess() {
+                                EmailUtils.saveVerificationCodeToSharedPreferences(
+                                    requireContext(),
+                                    verificationCode
+                                )
+                                Toast.makeText(
+                                    requireContext(),
+                                    "Email berhasil dikirim!",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                                isSendSuccess = true
+                                navigateToNextActivity(email, isSendSuccess)
+                            }
 
-                    // Kirim email dengan kode verifikasi
-                    EmailUtils.sendVerificationEmail(email, verificationCode)
+                            override fun onFailure() {
+                                Toast.makeText(
+                                    requireContext(),
+                                    "Gagal mengirim email. Silakan coba lagi.",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                                navigateToNextActivity(email, isSendSuccess)
+                            }
+                        })
 
-                    // Navigasi ke VerificationFragment dengan bundle
-                    val bundle = Bundle().apply {
-                        putString("email", email)
-                    }
-
-                    val intent = Intent(requireContext(), VerificationActivity::class.java)
-                    intent.putExtras(bundle)  // Sertakan bundle dalam intent
-                    startActivity(intent)
-                    requireActivity().finish()
                 } else {
                     Toast.makeText(
                         context,
@@ -120,6 +135,22 @@ class RegisterFragment : Fragment() {
         }
 
         return binding.root
+    }
+
+    private fun navigateToNextActivity(email: String, isSendSuccess: Boolean) {
+        val bundle = Bundle().apply {
+            putString("email", email)
+            putBoolean("isSendSuccess", isSendSuccess)
+        }
+        val intent = Intent(requireContext(), VerificationActivity::class.java)
+        intent.putExtras(bundle)
+        startActivity(intent)
+        requireActivity().finish()
+    }
+
+    private fun isValidEmail(email: String): Boolean {
+        val emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+"
+        return email.matches(emailPattern.toRegex())
     }
 
     private fun signIn() {

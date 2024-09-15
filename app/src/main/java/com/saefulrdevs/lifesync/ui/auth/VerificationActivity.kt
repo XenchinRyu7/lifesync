@@ -1,44 +1,44 @@
 package com.saefulrdevs.lifesync.ui.auth
 
 import android.os.Bundle
-import android.view.View
+import android.util.Log
+import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.FragmentContainerView
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.navigation.fragment.NavHostFragment
 import com.saefulrdevs.lifesync.R
+import com.saefulrdevs.lifesync.databinding.ActivityVerificationBinding
 
 class VerificationActivity : AppCompatActivity() {
 
+    private lateinit var binding: ActivityVerificationBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        // Buat FragmentContainerView untuk NavHostFragment
-        val fragmentContainer = FragmentContainerView(this).apply {
-            id = View.generateViewId()  // Generate ID untuk fragment container
+        enableEdgeToEdge()
+        binding = ActivityVerificationBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        ViewCompat.setOnApplyWindowInsetsListener(binding.root) { v, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+            insets
         }
-        setContentView(fragmentContainer)
-
-        // Ambil data dari intent
         val email = intent.extras?.getString("email")
+        val isSendSuccess = intent.extras?.getBoolean("isSendSuccess") ?: false
 
-        // Atur NavHostFragment dengan NavController dan kirim data ke EmailVerificationFragment
-        if (savedInstanceState == null) {
-            val navHostFragment = NavHostFragment.create(R.navigation.verification_navigation)
-            supportFragmentManager.beginTransaction()
-                .replace(fragmentContainer.id, navHostFragment)
-                .setPrimaryNavigationFragment(navHostFragment)
-                .commit()
+        Log.e("VerificationActivity", "Email: $email")
+        Log.e("VerificationActivity", "isSendSuccess: $isSendSuccess")
 
-            // Setelah NavHostFragment dibuat, kirim data ke fragment pertama
-            navHostFragment.navController.addOnDestinationChangedListener { _, destination, _ ->
-                if (destination.id == R.id.verificationEmailFragment) {
-                    val bundle = Bundle().apply {
-                        putString("email", email)
-                    }
-                    navHostFragment.navController.setGraph(R.navigation.verification_navigation, bundle)
-                }
-            }
+        val navHostFragment =
+            supportFragmentManager.findFragmentById(R.id.nav_host_fragment_verification) as NavHostFragment
+        val navController = navHostFragment.navController
+
+        val bundle = Bundle().apply {
+            putString("email", email)
+            putBoolean("isSendSuccess", isSendSuccess)
         }
+
+        navController.navigate(R.id.verificationEmailFragment, bundle)
     }
 }
-

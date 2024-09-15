@@ -7,7 +7,7 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 class LoginRegisterPagerAdapter(activity: FragmentActivity) : FragmentStateAdapter(activity) {
 
     override fun getItemCount(): Int {
-        return 2 // Dua fragment: Login dan Register
+        return 2
     }
 
     override fun createFragment(position: Int): Fragment {

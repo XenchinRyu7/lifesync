@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
-        android:hint="Fullname">
+        android:hint="Full Name">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/fullNameEditText"
@@ -27,7 +27,8 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/emailEditText"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:inputType="textEmailAddress" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -46,7 +47,6 @@
             android:layout_height="wrap_content"
             android:clickable="true"
             android:focusable="true"
-            android:focusableInTouchMode="false"
             android:inputType="none" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -58,7 +58,8 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/phoneNumberEditText"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:inputType="number" />
 
     </com.google.android.material.textfield.TextInputLayout>
 

@@ -3,14 +3,17 @@ package com.saefulrdevs.lifesync.ui.auth
 import android.content.Context
 import android.os.Bundle
 import android.os.CountDownTimer
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.navigation.fragment.findNavController
 import com.saefulrdevs.lifesync.R
 import com.saefulrdevs.lifesync.databinding.FragmentEmailVerificationBinding
 import com.saefulrdevs.lifesync.utils.EmailUtils
+import com.saefulrdevs.lifesync.utils.SendMail
 
 class EmailVerification : Fragment() {
 
@@ -18,14 +21,24 @@ class EmailVerification : Fragment() {
     private val binding get() = _binding!!
     private lateinit var countDownTimer: CountDownTimer
 
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentEmailVerificationBinding.inflate(inflater, container, false)
 
-        startCountdown()
+        val navController = findNavController()
+
+        val isSendSuccess = arguments?.getBoolean("isSendSuccess") ?: false
+        val email = arguments?.getString("email") ?: ""
+        Log.e("EmailVerification", "Email: $email")
+        Log.e("EmailVerification", "isSendSuccess: $isSendSuccess")
+
+        if (isSendSuccess) {
+            startCountdown()
+        } else {
+            binding.textViewDescription.text = "Gagal mengirim email. Silakan coba lagi."
+        }
 
         binding.btnSubmit.setOnClickListener {
             val enteredCode =
@@ -40,28 +53,45 @@ class EmailVerification : Fragment() {
                 Toast.makeText(context, "Verification code expired!", Toast.LENGTH_SHORT).show()
             } else if (enteredCode == savedCode) {
                 Toast.makeText(context, "Verification successful!", Toast.LENGTH_SHORT).show()
+                navController.navigate(R.id.pinFragment)
             } else {
                 Toast.makeText(context, "Invalid verification code", Toast.LENGTH_SHORT).show()
             }
         }
 
         binding.btnResend.setOnClickListener {
-            val email = arguments?.getString("email") ?: ""
 
-            // Generate kode verifikasi baru
             val newVerificationCode = EmailUtils.generateVerificationCode()
 
-            // Simpan kode baru di SharedPreferences
-            EmailUtils.saveVerificationCodeToSharedPreferences(
+            EmailUtils.sendVerificationEmail(
                 requireContext(),
-                newVerificationCode
-            )
+                email,
+                newVerificationCode,
+                object : SendMail.OnMailSendListener {
+                    override fun onSuccess() {
+                        Toast.makeText(
+                            requireContext(),
+                            "Email berhasil dikirim!",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                        EmailUtils.saveVerificationCodeToSharedPreferences(
+                            requireContext(),
+                            newVerificationCode
+                        )
+                        startCountdown()
+                    }
 
-            // Kirim ulang kode ke email
-            EmailUtils.sendVerificationEmail(email, newVerificationCode)
+                    override fun onFailure() {
+                        Toast.makeText(
+                            requireContext(),
+                            "Gagal mengirim email. Silakan coba lagi.",
+                            Toast.LENGTH_SHORT
+                        ).show()
 
-            // Restart timer
-            startCountdown()
+                        binding.textViewDescription.text =
+                            "Gagal mengirim email. Silakan coba lagi."
+                    }
+                })
         }
 
         return binding.root
@@ -91,6 +121,8 @@ class EmailVerification : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-        countDownTimer.cancel()
+        if (::countDownTimer.isInitialized) {
+            countDownTimer.cancel()
+        }
     }
 }
