@@ -2,6 +2,7 @@ package com.saefulrdevs.lifesync.ui.main.profile
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -39,12 +40,15 @@ class ProfileFragment : Fragment() {
         val app = requireContext().applicationContext as App
         val userId = app.userId
 
+        Log.d("ProfileFragment new user", "User ID: $userId")
+
         if (userId != null) {
             profileViewModel.getProfileById(userId) { profile ->
                 binding.accountName.text = profile?.username
                 binding.emailAccount.text = profile?.email
             }
         }
+
         binding.cardLogOut.setOnClickListener {
             MaterialAlertDialogBuilder(requireContext())
                 .setTitle("Logout")
@@ -55,6 +59,7 @@ class ProfileFragment : Fragment() {
                 }
                 .setPositiveButton("Ok") { dialog, _ ->
                     app.userId = null
+                    dialog.dismiss()
                     val intent = Intent(requireContext(), AuthActivity::class.java)
                     startActivity(intent)
                     requireActivity().finish()

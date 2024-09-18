@@ -9,10 +9,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProvider
-import com.saefulrdevs.lifesync.data.dao.ProfileDao
-import com.saefulrdevs.lifesync.data.database.DatabaseClient
-import com.saefulrdevs.lifesync.data.repository.ProfileRepository
+import com.saefulrdevs.lifesync.App
 import com.saefulrdevs.lifesync.databinding.FragmentLoginBinding
 import com.saefulrdevs.lifesync.ui.main.MainActivity
 import com.saefulrdevs.lifesync.viewmodel.profile.ProfileViewModel
@@ -51,6 +48,9 @@ class LoginFragment : Fragment() {
                             val editor = sharedPreferences.edit()
                             editor.putString("userId", profile.id)
                             editor.apply()
+
+                            val app = requireContext().applicationContext as App
+                            app.userId = profile.id
 
                             val intent = Intent(requireContext(), MainActivity::class.java)
                             startActivity(intent)

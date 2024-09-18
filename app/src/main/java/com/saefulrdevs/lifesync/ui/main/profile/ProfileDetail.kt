@@ -1,7 +1,5 @@
 package com.saefulrdevs.lifesync.ui.main.profile
 
-import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -15,11 +13,9 @@ import com.saefulrdevs.lifesync.App
 import com.saefulrdevs.lifesync.R
 import com.saefulrdevs.lifesync.data.model.Profile
 import com.saefulrdevs.lifesync.databinding.FragmentProfileDetailBinding
-import com.saefulrdevs.lifesync.ui.auth.AuthActivity
 import com.saefulrdevs.lifesync.utils.ViewUtils
 import com.saefulrdevs.lifesync.viewmodel.profile.ProfileViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import java.util.UUID
 
 @AndroidEntryPoint
 class ProfileDetail : Fragment() {

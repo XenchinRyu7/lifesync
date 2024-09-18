@@ -9,7 +9,9 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.navigation.fragment.NavHostFragment
 import com.saefulrdevs.lifesync.R
 import com.saefulrdevs.lifesync.databinding.ActivityVerificationBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class VerificationActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityVerificationBinding
@@ -26,17 +28,18 @@ class VerificationActivity : AppCompatActivity() {
         }
         val email = intent.extras?.getString("email")
         val isSendSuccess = intent.extras?.getBoolean("isSendSuccess") ?: false
-
-        Log.e("VerificationActivity", "Email: $email")
-        Log.e("VerificationActivity", "isSendSuccess: $isSendSuccess")
+        val userId = intent.extras?.getString("userId")
 
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment_verification) as NavHostFragment
         val navController = navHostFragment.navController
 
+        Log.d("User Id Verification", "User ID: $userId")
+
         val bundle = Bundle().apply {
             putString("email", email)
             putBoolean("isSendSuccess", isSendSuccess)
+            putString("userId", userId)
         }
 
         navController.navigate(R.id.verificationEmailFragment, bundle)

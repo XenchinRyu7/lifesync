@@ -12,6 +12,7 @@ import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import com.saefulrdevs.lifesync.R
 import com.saefulrdevs.lifesync.databinding.FragmentEmailVerificationBinding
+import com.saefulrdevs.lifesync.utils.CodeInputUtils
 import com.saefulrdevs.lifesync.utils.EmailUtils
 import com.saefulrdevs.lifesync.utils.SendMail
 
@@ -31,8 +32,15 @@ class EmailVerification : Fragment() {
 
         val isSendSuccess = arguments?.getBoolean("isSendSuccess") ?: false
         val email = arguments?.getString("email") ?: ""
-        Log.e("EmailVerification", "Email: $email")
-        Log.e("EmailVerification", "isSendSuccess: $isSendSuccess")
+        val userId = arguments?.getString("userId")
+
+        val bundle = Bundle().apply {
+            putString("email", email)
+            putBoolean("isSendSuccess", isSendSuccess)
+            putString("userId", userId)
+        }
+
+        Log.d("User Id Email", "User ID: $userId")
 
         if (isSendSuccess) {
             startCountdown()
@@ -53,46 +61,20 @@ class EmailVerification : Fragment() {
                 Toast.makeText(context, "Verification code expired!", Toast.LENGTH_SHORT).show()
             } else if (enteredCode == savedCode) {
                 Toast.makeText(context, "Verification successful!", Toast.LENGTH_SHORT).show()
-                navController.navigate(R.id.pinFragment)
+                navController.navigate(R.id.pinFragment, bundle)
             } else {
                 Toast.makeText(context, "Invalid verification code", Toast.LENGTH_SHORT).show()
             }
         }
 
         binding.btnResend.setOnClickListener {
-
-            val newVerificationCode = EmailUtils.generateVerificationCode()
-
-            EmailUtils.sendVerificationEmail(
-                requireContext(),
-                email,
-                newVerificationCode,
-                object : SendMail.OnMailSendListener {
-                    override fun onSuccess() {
-                        Toast.makeText(
-                            requireContext(),
-                            "Email berhasil dikirim!",
-                            Toast.LENGTH_SHORT
-                        ).show()
-                        EmailUtils.saveVerificationCodeToSharedPreferences(
-                            requireContext(),
-                            newVerificationCode
-                        )
-                        startCountdown()
-                    }
-
-                    override fun onFailure() {
-                        Toast.makeText(
-                            requireContext(),
-                            "Gagal mengirim email. Silakan coba lagi.",
-                            Toast.LENGTH_SHORT
-                        ).show()
-
-                        binding.textViewDescription.text =
-                            "Gagal mengirim email. Silakan coba lagi."
-                    }
-                })
+            binding.progressIndicator.visibility = View.VISIBLE
+            resendVerificationCode(email)
         }
+
+        CodeInputUtils.setupPinInputListeners(
+            listOf(binding.pin1, binding.pin2, binding.pin3, binding.pin4)
+        )
 
         return binding.root
     }
@@ -104,18 +86,60 @@ class EmailVerification : Fragment() {
         val currentTime = System.currentTimeMillis()
         val timeLeft = expiryTime - currentTime
 
+        binding.btnResend.isEnabled = false
+
         countDownTimer = object : CountDownTimer(timeLeft, 1000) {
             override fun onTick(millisUntilFinished: Long) {
-                val secondsRemaining = millisUntilFinished / 1000
-                binding.textViewDescription.text =
-                    "Enter the code we sent to your email (expires in $secondsRemaining seconds)"
+                if (_binding != null) {
+                    val secondsRemaining = millisUntilFinished / 1000
+                    binding.textViewDescription.text =
+                        "Enter the code we sent to your email (expires in $secondsRemaining seconds)"
+                }
             }
 
             override fun onFinish() {
-                binding.textViewDescription.text = "Verification code expired!"
+                if (_binding != null) {
+                    binding.textViewDescription.text = "Verification code expired!"
+                    binding.btnResend.isEnabled = true
+                }
             }
         }
         countDownTimer.start()
+    }
+
+    private fun resendVerificationCode(email: String) {
+        val newVerificationCode = EmailUtils.generateVerificationCode()
+
+        EmailUtils.sendVerificationEmail(
+            requireContext(),
+            email,
+            newVerificationCode,
+            object : SendMail.OnMailSendListener {
+                override fun onSuccess() {
+                    Toast.makeText(
+                        requireContext(),
+                        "Email berhasil dikirim!",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    EmailUtils.saveVerificationCodeToSharedPreferences(
+                        requireContext(),
+                        newVerificationCode
+                    )
+                    binding.progressIndicator.visibility = View.GONE
+                    startCountdown()
+                }
+
+                override fun onFailure() {
+                    Toast.makeText(
+                        requireContext(),
+                        "Gagal mengirim email. Silakan coba lagi.",
+                        Toast.LENGTH_SHORT
+                    ).show()
+
+                    binding.textViewDescription.text =
+                        "Gagal mengirim email. Silakan coba lagi."
+                }
+            })
     }
 
     override fun onDestroyView() {

@@ -65,6 +65,7 @@ class RegisterFragment : Fragment() {
         val btnRegister = binding.registerBtn
         btnRegister.setOnClickListener {
 
+            val userId = UUID.randomUUID().toString()
             val fullName = binding.fullNameEditText.text.toString()
             val email = binding.emailEditText.text.toString()
             val birthDay = binding.birthDateEditText.text.toString()
@@ -72,13 +73,27 @@ class RegisterFragment : Fragment() {
             val password = binding.passwordEditText.text.toString()
 
             val profile = Profile(
-                id = UUID.randomUUID().toString(),
+                id = userId,
                 username = fullName,
                 password = password,
                 email = email,
                 birthDay = birthDay,
                 phoneNumber = phoneNumber
             )
+
+
+            if (fullName.isNotEmpty() && email.isNotEmpty() && birthDay.isNotEmpty() && phoneNumber.isNotEmpty() && password.isNotEmpty()) {
+                binding.progressIndicator.visibility = View.VISIBLE
+                binding.blurBackground.visibility = View.VISIBLE
+                registerNewUser(profile)
+            } else {
+                Toast.makeText(
+                    context,
+                    "Semua field harus diisi!",
+                    Toast.LENGTH_SHORT
+                ).show()
+                return@setOnClickListener
+            }
 
             if (!isValidEmail(email)) {
                 Toast.makeText(
@@ -88,59 +103,69 @@ class RegisterFragment : Fragment() {
                 ).show()
                 return@setOnClickListener
             }
-
-            profileViewModel.insertProfile(profile) { isSuccess ->
-                if (isSuccess) {
-                    val verificationCode = EmailUtils.generateVerificationCode()
-
-                    var isSendSuccess = false
-
-                    EmailUtils.sendVerificationEmail(
-                        requireContext(),
-                        email,
-                        verificationCode,
-                        object : SendMail.OnMailSendListener {
-                            override fun onSuccess() {
-                                EmailUtils.saveVerificationCodeToSharedPreferences(
-                                    requireContext(),
-                                    verificationCode
-                                )
-                                Toast.makeText(
-                                    requireContext(),
-                                    "Email berhasil dikirim!",
-                                    Toast.LENGTH_SHORT
-                                ).show()
-                                isSendSuccess = true
-                                navigateToNextActivity(email, isSendSuccess)
-                            }
-
-                            override fun onFailure() {
-                                Toast.makeText(
-                                    requireContext(),
-                                    "Gagal mengirim email. Silakan coba lagi.",
-                                    Toast.LENGTH_SHORT
-                                ).show()
-                                navigateToNextActivity(email, isSendSuccess)
-                            }
-                        })
-
-                } else {
-                    Toast.makeText(
-                        context,
-                        "Register Gagal, silahkan coba lagi",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
-            }
         }
 
         return binding.root
     }
 
-    private fun navigateToNextActivity(email: String, isSendSuccess: Boolean) {
+    private fun registerNewUser(profile: Profile) {
+
+        profileViewModel.insertProfile(profile) { isSuccess ->
+            if (isSuccess) {
+                val verificationCode = EmailUtils.generateVerificationCode()
+
+                var isSendSuccess = false
+
+                EmailUtils.sendVerificationEmail(
+                    requireContext(),
+                    profile.email ?: "",
+                    verificationCode,
+                    object : SendMail.OnMailSendListener {
+                        override fun onSuccess() {
+                            EmailUtils.saveVerificationCodeToSharedPreferences(
+                                requireContext(),
+                                verificationCode
+                            )
+                            Toast.makeText(
+                                requireContext(),
+                                "Email berhasil dikirim!",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                            isSendSuccess = true
+                            binding.progressIndicator.visibility = View.GONE
+                            binding.blurBackground.visibility = View.GONE
+
+                            navigateToNextActivity(profile.email ?: "", isSendSuccess, profile.id)
+                        }
+
+                        override fun onFailure() {
+                            Toast.makeText(
+                                requireContext(),
+                                "Gagal mengirim email. Silakan coba lagi.",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                            binding.progressIndicator.visibility = View.GONE
+                            binding.blurBackground.visibility = View.GONE
+                            navigateToNextActivity(profile.email ?: "", isSendSuccess, profile.id)
+                        }
+                    })
+
+            } else {
+                Toast.makeText(
+                    context,
+                    "Register Gagal, silahkan coba lagi",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        }
+    }
+
+    private fun navigateToNextActivity(email: String, isSendSuccess: Boolean, userId: String) {
+        Log.d("User Id Register", "User ID: $userId")
         val bundle = Bundle().apply {
             putString("email", email)
             putBoolean("isSendSuccess", isSendSuccess)
+            putString("userId", userId)
         }
         val intent = Intent(requireContext(), VerificationActivity::class.java)
         intent.putExtras(bundle)

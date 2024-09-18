@@ -1,129 +1,149 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="8dp">
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:hint="Full Name">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/fullNameEditText"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1" />
-
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Email">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/emailEditText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="textEmailAddress" />
-
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/birthDateInputLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Birth Date"
-        app:endIconContentDescription="@string/date_icon"
-        app:endIconDrawable="@drawable/ic_calendar_month"
-        app:endIconMode="custom">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/birthDateEditText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:clickable="true"
-            android:focusable="true"
-            android:inputType="none" />
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Phone Number">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/phoneNumberEditText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="number" />
-
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Password"
-        app:endIconMode="password_toggle">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/passwordEditText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="textPassword" />
-
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <Button
-        android:id="@+id/registerBtn"
-        style="?attr/materialButtonOutlinedStyle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="Set Up Now"
-        app:shapeAppearance="@style/CustomShapeAppearance" />
+    android:layout_height="match_parent">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:orientation="horizontal">
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="8dp">
 
-        <View
-            android:layout_width="0dp"
-            android:layout_height="1dp"
-            android:layout_weight="1"
-            android:background="?android:attr/listDivider" />
-
-        <TextView
-            android:id="@+id/textView5"
-            android:layout_width="wrap_content"
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"
-            android:gravity="center"
-            android:text="@string/or"
-            android:textSize="16sp" />
+            android:hint="Full Name">
 
-        <View
-            android:layout_width="0dp"
-            android:layout_height="1dp"
-            android:layout_weight="1"
-            android:background="?android:attr/listDivider" />
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/fullNameEditText"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Email">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/emailEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textEmailAddress" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/birthDateInputLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Birth Date"
+            app:endIconContentDescription="@string/date_icon"
+            app:endIconDrawable="@drawable/ic_calendar_month"
+            app:endIconMode="custom">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/birthDateEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:focusable="true"
+                android:focusableInTouchMode="false"
+                android:inputType="none" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Phone Number">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/phoneNumberEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="number" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Password"
+            app:endIconMode="password_toggle">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/passwordEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPassword" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <Button
+            android:id="@+id/registerBtn"
+            style="?attr/materialButtonOutlinedStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Set Up Now"
+            app:shapeAppearance="@style/CustomShapeAppearance" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_weight="1"
+                android:background="?android:attr/listDivider" />
+
+            <TextView
+                android:id="@+id/textView5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:gravity="center"
+                android:text="@string/or"
+                android:textSize="16sp" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_weight="1"
+                android:background="?android:attr/listDivider" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/googleBtn"
+            style="?attr/materialButtonOutlinedStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Set Up With Google"
+            app:icon="@drawable/ic_google"
+            app:iconGravity="textStart"
+            app:iconTint="@null"
+            app:shapeAppearance="@style/CustomShapeAppearance" />
+
     </LinearLayout>
 
-    <Button
-        android:id="@+id/googleBtn"
-        style="?attr/materialButtonOutlinedStyle"
+    <View
+        android:id="@+id/blurBackground"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Set Up With Google"
-        app:icon="@drawable/ic_google"
-        app:iconGravity="textStart"
-        app:iconTint="@null"
-        app:shapeAppearance="@style/CustomShapeAppearance" />
+        android:layout_height="match_parent"
+        android:background="#80000000"
+        android:visibility="gone" />
 
-</LinearLayout>
+    <com.google.android.material.progressindicator.CircularProgressIndicator
+        android:id="@+id/progressIndicator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:indeterminate="true"
+        android:visibility="gone" />
+</FrameLayout>

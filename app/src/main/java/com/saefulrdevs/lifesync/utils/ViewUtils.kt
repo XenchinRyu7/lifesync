@@ -22,7 +22,6 @@ object ViewUtils {
         datePicker.addOnPositiveButtonClickListener { selection ->
             val formattedDate = formatDate(selection)
 
-            // Tentukan komponen mana yang akan di-update
             editText?.setText(formattedDate)
             textView?.text = formattedDate
         }
